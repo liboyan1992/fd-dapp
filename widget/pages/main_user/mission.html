@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.mission")}}</title>
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+  <script src="../../script/vue.min.js"></script>
+  <script src="../../script/vue-p5.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+</head>
+
+<body>
+  <div id="mission" style="width: 100%; height: 100%;">
+    <div class="topbar flex flex-h flex-center-v" ref="topbar" style="background-color: red;" >
+      <img class="btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+      <span class="flex-1 flex-center">{{$t('lang.mission')}}</span>
+    </div>
+
+    <div class="flex-center">
+      <h1>{{$t('lang.waitingFor')}}</h1>
+    </div>
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#mission',
+    i18n,
+    data() {
+      return {
+      
+      };
+    },
+    created() {
+      
+    },
+    mounted() {
+      
+      
+    },
+    methods: {
+      cancel() {
+        api.closeWin();
+      }
+    },
+  };
+  setLanguage = function () {
+      if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+          i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+      }
+  }
+  apiready = function () {
+      window.friendsHome = new Vue(vueObj);
+      setLanguage();
+  }
+</script>
+
+</html>

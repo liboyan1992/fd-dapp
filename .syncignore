@@ -1,0 +1,4 @@
+**/*.js.map
+**/node_modules/**
+src/**
+{**/*.js.map,**/node_modules/**,src/**}

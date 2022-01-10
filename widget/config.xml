@@ -1,0 +1,37 @@
+ <widget id="A6196071104863"  version="0.0.1">
+    <name>FES</name>
+    <description>
+        Five elements
+    </description>
+    <author email="developer@fes5.net" href="http://www.fes5.net">
+        Developer
+    </author>
+    <content src="./app.json" />
+    <access origin="*" />
+	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+	<preference name="windowBackground" value="#fff"/>
+	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+	<preference name="hScrollBarEnabled" value="false"/>
+	<preference name="autoLaunch" value="true"/>
+	<preference name="autoUpdate" value="true" />
+	<preference name="smartUpdate" value="false" />
+	<preference name="debug" value="true"/>
+	<preference name="statusBarAppearance" value="true"/>
+	<preference name="avm" value="true"/>
+	<permission name="readPhoneState" />
+	<permission name="camera" />
+	<permission name="record" />
+	<permission name="location" />
+	<permission name="fileSystem" />
+	<permission name="internet" />
+	<permission name="bootCompleted" />
+	<permission name="hardware" />
+  
+  <meta-data name="Mob-AppKey" value="1dae223f424f0"/>
+  <meta-data name="Mob-AppSecret" value="9094558eb7b5d9fa9b5db074687aa5dc"/>
+	<meta-data name="com.google.android.gms.ads.APPLICATION_ID" value="ca-app-pub-5743539110723541~7490785390"/>
+	<feature name="admob">
+		<param name="APP_ID" value="ca-app-pub-5743539110723541~7490785390"/>
+	</feature>
+
+</widget>

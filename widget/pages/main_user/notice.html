@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.notice")}}</title>
+	<script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+  <style>
+    html,
+    body {
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex flex-v" id="game" style="width:100%;height:100%; min-height:100%;">
+    <div class="topbar flex flex-h flex-center-v">
+      <img class="btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+      <span class="flex-1 flex-center">{{$t('lang.notice')}}</span>
+    </div>
+    <van-pull-refresh v-model="refreshing" @refresh="refresh(true)" style="min-height: 100%; height:100%;"
+      class="flex-1">
+      <van-list v-model="loading" :finished="finished" :finished-text="$t('lang.noMore')" @load="onLoad"
+        style="min-height:100%;height: 100%;">
+        <van-cell v-for="(item, index) in noticeList" :key="index" @click="toDetail(item.title, item.content, item.updatedAt)">
+          <div class="flex flex-h van-clearfix">
+            <div class="flex flex-h flex-1 flex-left" style="margin-left: 2vw;">
+              <div class="flex flex-v">
+                <span class="flex-left" style="font-size: 18px;">{{item.title}}</span>
+                <span class="txt-desc flex-left" style="margin-top:2vw;">{{ item.updatedAt }}</span>
+              </div>
+            </div>
+          </div>
+        </van-cell>
+      </van-list>
+    </van-pull-refresh>
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#game',
+    i18n,
+    data() {
+      return {
+        noticeList: [],
+        loading: false,
+        finished: false,
+        refreshing: false,
+        page: 1,
+      };
+    },
+    created() {
+
+    },
+    methods: {
+      setLanguage() {
+        if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+          this.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        }
+      },
+      onLoad() {
+        this.refresh();
+      },
+      refresh(reset = false) {
+        if (reset) {
+          this.noticeList = [];
+          this.page = 1;
+          this.finished = false;
+          this.loading = true;
+        }
+        var that = this;
+        POST(getNoticeList(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+          page: that.page,
+          limit: 10
+        }, function (ret, err) {
+          if (ret.data.items.length == 0) {
+            that.finished = true;
+          } else {
+            that.page++;
+            that.noticeList = that.noticeList.concat(ret.data.items);
+          }
+          that.loading = false;
+          that.refreshing = false;
+          if (that.noticeList.length == ret.data.total) {
+            that.finished = true;
+          }
+        }, function (err) {
+            that.loading = false;
+        });
+      },
+      toDetail(title, content, time) {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'detail',
+          url: './notice_detail.html',
+          pageParam: {
+            title: title,
+            content: content,
+            time: time
+          }
+        })
+      },
+      cancel() {
+        api.closeWin();
+      }
+    },
+  };
+  setLanguage = function () {
+    if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+      i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+    }
+  }
+  apiready = function () {
+    window.appGame = new Vue(vueObj);
+    setLanguage();
+  }
+</script>
+
+</html>

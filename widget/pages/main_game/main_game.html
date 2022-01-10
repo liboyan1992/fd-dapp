@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.gameRecord")}}</title>
+	<script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+  
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+  
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+  <style>
+    html,
+    body {
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex flex-v" id="game" style="width:100%;height:100%; min-height:100%;">
+    <div class="topbar">{{$t('lang.gameRecord')}}</div>
+    <van-tabs v-model="tab" @click="onClickTab" background="#a0732a" offset-top="0" title-active-color="#ffffff"
+      title-inactive-color="#c8c8c8" color="#ffff00">
+      <van-tab :title="$t('lang.gameResult')">
+        <van-pull-refresh v-model="refreshing" @refresh="refresh(true)" style="min-height: 100%; height:100%;" class="flex-1">
+          <van-list v-model="loading" :finished="finished" :finished-text="$t('lang.noMore')" @load="onLoad"
+            style="min-height:100%;height: 100%;">
+            <van-cell v-for="(item, index) in guessList" :key="index" @click="toDetail(item)">
+              <div class="flex flex-h van-clearfix">
+                <div class="flex flex-h flex-1 flex-left flex-center-v" style="margin-left: 2vw;">
+                  <div class="flex flex-v">
+                    <div class="flex flex-h">
+                      <div v-for="(i) in 5" class="flex flex-v">
+                        <img :src="getElementImg(i-1)" width="40vw" height="40vw"
+                          :style="item.res == null || item.res.search(i-1) == -1 ? 'opacity: 30%;' : ''"></img>
+                      </div>
+                    </div>
+                    <span class="txt-desc flex-left" style="margin-top:2vw;">{{ item.startTime }} ~ {{ item.endTime }}</span>
+                  </div>
+                </div>
+                <div class="flex flex-v flex-right flex-center-v" style="width: 12vw;" v-if="item.res != null">
+                  <img src="../../image/img/icon_up.png" v-if="item.bingo == 2" width="28px" class="flex-right"></img>
+                  <img src="../../image/img/icon_down.png" v-if="item.bingo == 1" width="28px" class="flex-right"></img>
+                  <span style="margin-top: 2vw;color: #808080; font-size: 12px;" v-if="item.bingo == 2"
+                    class="flex-right">{{$t("lang.guessSuccess")}}</span>
+                  <span style="margin-top: 2vw;color: #808080; font-size: 12px;" v-if="item.bingo == 1"
+                    class="flex-right">{{$t("lang.guessFail")}}</span>
+                </div>
+              </div>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
+      </van-tab>
+      <van-tab :title="$t('lang.walletRecord')">
+        <van-dropdown-menu active-color="#a0732a">
+          <van-dropdown-item v-model="dateType" :options="options" @change="changeDateType"/>
+        </van-dropdown-menu>
+        <div><van-divider /></div>
+        <van-pull-refresh v-model="refreshing" @refresh="refresh(true)" style="min-height: 100%; height:100%;" class="flex-1">
+          <van-list v-model="loading" :finished="finished" :finished-text="$t('lang.noMore')" @load="onLoad"
+            style="min-height:100%;height: 100%;">
+            <van-cell v-for="(item, index) in recordList" :key="index">
+              <div class="flex flex-h flex-center-v van-clearfix">
+                <div class="circle-red" v-if="item.amount < 0"></div>
+                <div class="circle-green" v-if="item.amount > 0"></div>
+                <div class="circle-grey" v-if="item.amount == 0"></div>
+                <div class="flex flex-h flex-1 flex-left" style="margin-left: 2vw;">
+                  <div class="flex flex-v">
+                    <span class="flex-left flex-1 txt-core">
+                      <span v-if="item.category == 0">{{$t('lang.statusSystemUpdatedBalance')}}</span>
+                      <span v-if="item.category == 1">{{$t('lang.statusSystemUpdatedFrozen')}}</span>
+                      <span v-if="item.category == 2">{{$t('lang.statusRejectWithdraw')}}</span>
+                      <span v-if="item.category == 3">{{$t('lang.statusGuess')}}</span>
+                      <span v-if="item.category == 4">{{$t('lang.statusUnlock')}}</span>
+                      <span v-if="item.category == 5">{{$t('lang.statusWithdraw')}}</span>
+                      <span v-if="item.category == 6">{{$t('lang.statusGuessPayback')}}</span>
+                      <span v-if="item.category == 7">{{$t('lang.statusGuessFrozen')}}</span>
+                      <span v-if="item.category == 8">{{$t('lang.statusGuessProfit')}}</span>
+                      <span v-if="item.category == 9">{{$t('lang.statusTopup')}}</span>
+                      <span v-if="item.category == 10">{{$t('lang.statusGuessAward')}}</span>
+                    </span>
+                    <span class="flex-left flex-1 txt-desc" style="margin-top:2vw;">{{ item.date }}</span>
+                  </div>
+                </div>
+                <div class="flex flex-v" style="margin-top: 1vw;">
+                  <span class="flex-right txt-core" style="font-size: 18px;"><span v-if="item.amount > 0">+</span>{{ numFilter(item.amount) | ellipsis }}</span>
+                  <span class="flex-right txt-desc" style="margin-top:2vw;"></span>
+                </div>
+              </div>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
+      </van-tab>
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#game',
+    i18n,
+    data() {
+      return {
+        tab: 0,
+        guessList: [],
+        recordList: [],
+        loading: false,
+        finished: false,
+        refreshing: false,
+        page: 1,
+        dateType: 'day',
+        options: [{ text: i18n.t('lang.day'), value: 'day' },{ text: i18n.t('lang.month'), value: 'month' },{ text: i18n.t('lang.year'), value: 'year' }],
+      };
+    },
+    created() {
+      this.options = [{ text: i18n.t('lang.day'), value: 'day' }, { text: i18n.t('lang.month'), value: 'month' }, { text: i18n.t('lang.year'), value: 'year' }];
+    },
+    methods: {
+      numFilter(value) {
+        const realVal = parseFloat(value).toFixed(2);
+        return realVal;
+      },
+      onClickTab(index, title) {
+        this.tab = index;
+        this.refresh(true)
+      },
+      changeDateType(){
+        this.refresh(true)
+      },
+      setLanguage() {
+        if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+          this.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        }
+      },
+      onLoad() {
+        this.refresh();
+      },
+      refresh(reset = false) {
+        if (reset) {
+          this.guessList = [];
+          this.recordList = [];
+          this.page = 1;
+          this.finished = false;
+          this.loading = true;
+        }
+        var that = this;
+        this.options = [{ text: i18n.t('lang.day'), value: 'day' }, { text: i18n.t('lang.month'), value: 'month' }, { text: i18n.t('lang.year'), value: 'year' }];
+        if(this.tab == 0) {
+          POST(getGameHistory(), {
+            token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+            page: that.page,
+            limit: 10
+          }, function (ret, err) {
+            if (ret.data.items.length == 0) {
+              that.finished = true;
+            } else {
+              that.page++;
+              that.guessList = that.guessList.concat(ret.data.items);
+            }
+            that.loading = false;
+            that.refreshing = false;
+            if (that.guessList.length == ret.data.total) {
+              that.finished = true;
+            }
+          });
+        } else if(this.tab == 1){
+          console.log(that.page);
+          POST(getWalletLogByDate(), {
+            token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+            type: that.dateType,
+            page: that.page,
+            limit: 10
+          }, function (ret, err) {
+            console.log(JSON.stringify(ret.data));
+            if (ret.data.items.length == 0) {
+              that.finished = true;
+            } else {
+              that.page++;
+              that.recordList = that.recordList.concat(ret.data.items);
+            }
+            that.loading = false;
+            that.refreshing = false;
+            console.log(that.recordList.length);
+            if (that.recordList.length == ret.data.total) {
+              that.finished = true;
+            }
+          }, function (err) {
+            that.loading = false;
+            that.refreshing = false;
+          });
+        }
+      
+
+        
+      },
+      toDetail(item) {
+        api.openWin({
+          name: 'guess_detail',
+          url: './guess_detail.html',
+          pageParam: {
+            item: item
+          }
+        })
+      },
+      cancel() {
+        api.closeWin();
+      }
+    },
+  };
+  setLanguage = function () {
+    if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+      i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+    }
+  }
+  apiready = function () {
+    window.appGame = new Vue(vueObj);
+    setLanguage();
+  }
+</script>
+
+</html>

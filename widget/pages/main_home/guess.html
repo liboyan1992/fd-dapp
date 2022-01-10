@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>{{$t("lang.guess")}}</title>
+	<script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+	<script src="../../script/jquery.min.js"></script>
+	<script src="../../script/jquery.md5.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/webservice.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/app.css" />
+</head>
+<body>
+	<div class="flex flex-v" id="app" style="width:100%;height:100%">
+		<div class="topbar flex flex-h flex-center-v">
+			<img class="btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+			<span class="flex-1 flex-center">{{$t('lang.game')}}</span>
+		</div>
+
+		<van-swipe :show-indicators=true indicator-color="#5393ff" @change="selEle" height="250">
+				<van-swipe-item >
+						<img src="../../image/img/gold_card.png" style="width: 100%;" />
+				</van-swipe-item>
+				<van-swipe-item >
+						<img src="../../image/img/wood_card.png" style="width: 100%;" />
+				</van-swipe-item>
+				<van-swipe-item >
+						<img src="../../image/img/water_card.png" style="width: 100%;" />
+				</van-swipe-item>
+				<van-swipe-item >
+						<img src="../../image/img/fire_card.png" style="width: 100%;" />
+				</van-swipe-item>
+				<van-swipe-item >
+						<img src="../../image/img/soil_card.png" style="width: 100%;" />
+				</van-swipe-item>
+		</van-swipe>
+    
+		<div style="margin:10vw 8vw 3vw 8vw">
+			<van-form @submit="onSubmit">
+				<van-field name="amount" 
+									 :placeholder="$t('lang.guessAmount')" 
+									 :rules="[{required: true, message: $t('lang.pleaseEnterGuessAmount') }]" 
+									 class="input-field txt-core" 
+									 input-align="center"
+									 error-message-align="center"
+									 @touchstart.native.stop="showKeyboard = true"
+									 v-model="amount"
+									 size="large"
+									 readonly
+									 clickable></van-field>
+				<div style="height:2vw"></div>
+				<div class="flex flex-h flex-center">
+					<img src="../../image/img/taiji-small.png" style="width: 20px;"></img>
+					<span class="txt-desc">{{$t("lang.guessAmount")}}</span>
+				</div>
+				<div style="height:30vw"></div>
+				<input class="btn-normal" type="submit" tapmode :value="$t('lang.confirm')"></input>
+				<div style="height:2vw"></div>
+				<div class="btn-normal" @click="cancel" tapmode>{{$t("lang.cancel")}}</div>
+			</van-form>
+			<van-number-keyboard :show="showKeyboard" @blur="showKeyboard = false" @input="onInput" @delete="onDelete" />
+		</div>
+	</div>
+</body>
+
+<script>
+	var vueObj = {
+		el: '#app',
+		i18n,
+		data() {
+			return {
+				images: [
+					'https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/gold_card.png',
+					'https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/wood_card.png',
+					'https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/water_card.png',
+					'https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/fire_card.png',
+					'https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/soil_card.png',
+				],
+				category: 0,
+				amount: '',
+				showKeyboard: false
+			};
+		},
+		created() {
+			var that = this;
+			api.addEventListener({
+				name: 'viewappear'
+			}, function (ret, err) {
+				if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+					that.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+				}
+			});
+		},
+		methods: {
+			onSubmit(params) {
+				api.notification({
+					vibrate: [100, 500],
+					sound: 'widget://sound/ding.mp3'
+				});
+				params.token = api.getPrefs({ sync: true, key: KEY_TOKEN });
+				params.guessId = api.pageParam.guessId;
+				params.category = this.category;
+				alertDouble(i18n.t('lang.confirmGuess', { amt:  params.amount, elm: getElementStr(params.category) }) , function() {
+					POST(getJoinGuess(), params, function (ret, err) {
+						alertSingle(i18n.t("lang.success"), function () {
+							api.closeWin();
+						});
+					});
+				});
+			},
+			selEle(index){
+				this.category = index;
+			},
+			onInput(value) {
+				if (this.amount == '' && value == 0) {
+
+				} else {
+					this.amount += value
+				}
+			},
+			onDelete() {
+				if (this.amount != '') {
+					this.amount = this.amount.slice(0, -1);
+				}
+			},
+			cancel(){
+				api.closeWin();
+			}
+		},
+	};
+	apiready = function () {
+		window.app = new Vue(vueObj);		
+	}
+</script>
+
+</html>

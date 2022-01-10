@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.personalInfo")}}</title>
+	<script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+  <style>
+    html,
+    body {
+      overflow-x: hidden;
+    }
+    .row-title {
+      width: 30%;
+      padding-left: 20px;
+      align-items: flex-start;
+      align-content: flex-start;
+      text-align: left;
+    }
+    .row-content {
+      width: 70%;
+      padding-right: 20px;
+      align-items: flex-end;
+      align-content: flex-end;
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex flex-v" id="game" style="width:100%;height:100%; min-height:100%;">
+    <div class="topbar flex flex-h flex-center-v">
+      <img class="btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+      <span class="flex-1 flex-center">{{$t('lang.personalInfo')}}</span>
+      <img class="flex-right topbar-btn" src="../../image/img/icon_save.png" @click="save"></img>
+    </div>
+    <div class="flex flex-h flex-center-v" style="width:100%; height: 88px; border-bottom:1px dashed #e8e8e8;">
+      <div class="row-title flex-left">{{$t('lang.profilePic')}}</div>
+      <div class="row-content flex-right">
+        <van-image round fit="cover" width="64px" height="64px" :src="avatar" class="flex-right" @click="showAction"
+          style="width:64px;padding-right:4vw;" />
+      </div>
+    </div>
+    <div class="flex flex-h flex-center-v" style="width:100%; height: 44px; border-bottom:1px dashed #e8e8e8;">
+      <div class="row-title flex-left">{{$t('lang.nickname')}}</div>
+      <div class="row-content flex-right">
+        <van-field v-model="vName" placeholder="" />
+      </div>
+    </div>
+    <div class="flex flex-h flex-center-v" style="width:100%; height: 44px; border-bottom:1px dashed #e8e8e8;">
+      <div class="row-title flex-left">{{$t('lang.username')}}</div>
+        {{vUserName | name}}
+    </div>
+    <div class="flex flex-h flex-center-v" style="width:100%; height: 44px; border-bottom:1px dashed #e8e8e8;">
+      <div class="row-title flex-left">{{$t('lang.email')}}</div>
+          {{vEmail | email}}
+    </div>
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#game',
+    i18n,
+    data() {
+      return {
+        avatar: '../../image/icon/icon-user-avatar.png',
+        vName: '',
+        vUserName: '',
+        vEmail: '',
+        user: null,
+      };
+    },
+    filters: {
+    email: function (value) {
+      if(value && value.length >6){
+        let str = value.split("@");
+        return  str[0].substr(0, str[0].length - 2) + "*****" + str[1].substr(2);
+      }else{
+       return value
+      }
+    },
+    name: function (value) {
+      if(value && value.length >2){
+        return "*" + value.substring(value.length - 2);
+      }else{
+        return value
+      }
+    },
+  },
+
+    created() {
+      this.avatar = api.pageParam.avatar
+      this.user = getUser()
+      if (this.user) {
+        this.vName = this.user.name
+        this.vEmail = this.user.email
+        this.vUserName = this.user.username
+      }
+    },
+    methods: {
+      onLoad() {
+        
+      },
+      save() {
+        var that = this;
+        if (this.name == '') {
+          alertSingle(i18n.t('lang.pleaseEnterNickname'));
+        } else {
+          alertDouble(i18n.t('lang.confirmToSubmit'), function () {
+            POST(getUpdateInfo(), {
+              token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+              name: that.vName,
+              header: that.avatar 
+            }, function (ret, err) {
+              // 缓存用户登录信息
+              api.setPrefs({
+                key: KEY_TOKEN,
+                value: ret.data.token
+              })
+              api.setPrefs({
+                key: KEY_LOGIN_USER,
+                value: ret.data
+              });
+              api.closeWin();
+              api.sendEvent({ name: 'refreshUserPage' });
+              api.toast({
+                msg: i18n.t('lang.saveSuccess'),
+                duration: 2000,
+                location: 'bottom'
+              });
+            });
+          });
+        }
+      },
+      showAction() {
+        var that = this
+        var permissions = ['camera','photos','storage'];
+        var resultList = api.hasPermission({
+            list: permissions
+        });
+        var granted = resultList[0].granted & resultList[1].granted & resultList[2].granted;
+        if(granted) {
+          api.actionSheet({
+            cancelTitle: i18n.t('lang.cancel'),
+            buttons: [i18n.t('lang.takePicture'), i18n.t('lang.selectFromAlbums')],
+            style: {     
+                fontNormalColor:'#a0732a',    //选项按钮正常状态文字颜色，支持#000、#000000、rgb、rgba，默认值：#007AFF
+                fontPressColor:'#a0732a',     //选项按钮按下时文字颜色，支持#000、#000000、rgb、rgba，默认值：#0060F0
+            }
+          }, function (ret, err) {
+            if (ret) {
+              that.getPicture(ret.buttonIndex);
+            }
+          });
+        } else {
+          alertDouble(i18n.t('lang.openPermission'), function () {
+            api.requestPermission({
+              list: permissions,
+            }, function(res) {
+              that.showAction();
+            });
+          });
+        }
+      },
+      getPicture(sourceType) {
+        var that = this;
+        if (sourceType == 1) { // 拍照
+          api.getPicture({
+            sourceType: 'camera',
+            encodingType: 'jpg',
+            mediaValue: 'pic',
+            allowEdit: false,
+            destinationType: 'base64',
+            quality: 100,
+            targetWidth: 200,
+            targetHeight: 200,
+            saveToPhotoAlbum: true
+          }, function (ret, err) {
+            if (ret) {
+              that.uploading(ret.base64Data)
+            }
+          });
+        } else if (sourceType == 2) { // 从相机中选择
+          api.getPicture({
+            sourceType: 'library',
+            encodingType: 'jpg',
+            mediaValue: 'pic',
+            destinationType: 'base64',
+            quality: 100,
+            targetWidth: 200,
+            targetHeight: 200
+          }, function (ret, err) {
+            if (ret) {
+              that.uploading(ret.base64Data)
+            }
+          });
+        } else {
+          return;
+        }
+      },
+      //上传
+      uploading(avatar){
+        var that = this;
+        var timestamp = new Date().getTime();
+        var token = getToken(timestamp);
+        POST(getUpload(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+          avatar: avatar
+        }, function (ret, err) {
+          that.avatar = ret.data;
+          api.hideProgress();
+        });
+      }, 
+      cancel() {
+        api.closeWin();
+      }
+    },
+  };
+  setLanguage = function () {
+    if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+      i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+    }
+  }
+  apiready = function () {
+    window.appInfo = new Vue(vueObj);
+    setLanguage();
+  }
+</script>
+
+</html>

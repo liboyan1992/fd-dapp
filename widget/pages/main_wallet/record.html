@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.record")}}</title>
+  <script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+  <style>
+    html,
+    body {
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex flex-v" id="app" style="width:100%;height:100%; min-height:100%;">
+    <div class="topbar flex flex-h flex-center-v">
+      <img class="flex-left topbar-btn btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+      <span class="flex-1 flex-center">{{$t('lang.record')}}</span>
+    </div>
+
+    <van-tabs v-model="category"  @click="onClickTab" background="#a0732a" offset-top="0" title-active-color="#ffffff" title-inactive-color="#c8c8c8" color="#ffff00">
+      <van-tab :title="$t('lang.topup')">
+        <van-pull-refresh v-model="refreshing" @refresh="refresh(true)" style="min-height: 100%; height:100%;" class="flex-1">
+          <van-list v-model="loading" :finished="finished" :finished-text="$t('lang.noMore')" @load="onLoad"
+            style="min-height:100%;height: 100%;">
+            <van-cell v-for="(item, index) in recordList" :key="index" @click="copyCode(item.txid)">
+              <div class="flex flex-h flex-center-v van-clearfix">
+                <div class="circle-red" v-if="item.status == 0"></div>
+                <div class="circle-green" v-if="item.status == 1"></div>
+                <div class="flex flex-h flex-1 flex-left" style="margin-left: 2vw;">
+                  <div class="flex flex-v">
+                    <span class="flex-left flex-1 txt-core ellipsis ellipsis-1">{{ item.txid| ellipsis }}</span>
+                    <span class="flex-left flex-1 txt-desc" style="margin-top:2vw;">{{ item.createdAt }}</span>
+                  </div>
+                </div>
+                <div class="flex flex-v" style="margin-top: 1vw;">
+                  <span class="flex-right txt-core" style="font-size: 18px;">{{ item.amount }}&nbsp;{{ item.name }}</span>
+                  <span class="flex-right txt-desc" style="margin-top:2vw;">
+                    <van-tag type="danger" v-if="item.status == 0">{{$t('lang.statusPendingConfirm')}}</van-tag>
+                    <van-tag type="success" v-if="item.status == 1">{{$t('lang.statusDone')}}</van-tag>
+                  </span>
+                </div>
+              </div>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
+      </van-tab>
+      <van-tab :title="$t('lang.withdraw')">
+        <van-pull-refresh v-model="refreshing" @refresh="refresh(true)" style="min-height: 100%; height:100%;" class="flex-1">
+          <van-list v-model="loading" :finished="finished" :finished-text="$t('lang.noMore')" @load="onLoad"
+            style="min-height:100%;height: 100%;">
+            <van-cell v-for="(item, index) in recordList" :key="index" @click="copyCode(item.txid)">
+              <div class="flex flex-h flex-center-v van-clearfix">
+                <div class="circle-red" v-if="item.status != 1"></div>
+                <div class="circle-green" v-if="item.status == 1"></div>
+                <div class="flex flex-h flex-1 flex-left" style="margin-left: 2vw;">
+                  <div class="flex flex-v">
+                    <span class="flex-left flex-1 txt-core ellipsis ellipsis-1">{{ item.txid| ellipsis }}</span>
+                    <span class="flex-left flex-1 txt-desc" style="margin-top:2vw;">{{ item.createdAt }}</span>
+                  </div>
+                </div>
+                <div class="flex flex-v" style="margin-top: 1vw;">
+                  <span class="flex-right txt-core" style="font-size: 18px;">{{ item.amount }}&nbsp;{{ item.name }}</span>
+                  <span class="flex-right txt-desc" style="margin-top:2vw;">
+                    <van-tag color="#c8c8c8" v-if="item.status == 0">{{$t('lang.statusPendingApprove')}}</van-tag>
+                    <van-tag type="primary" v-if="item.status == 1">{{$t('lang.statusApproved')}}</van-tag>
+                    <van-tag type="success" v-if="item.status == 2">{{$t('lang.statusDone')}}</van-tag>
+                    <van-tag type="warning" v-if="item.status == 3">{{$t('lang.statusUserRedraw')}}</van-tag>
+                    <van-tag type="danger" v-if="item.status == 4">{{$t('lang.statusFailed')}}</van-tag>
+                    <van-tag type="danger" v-if="item.status == 5">{{$t('lang.statusRejected')}}</van-tag>
+                    <van-tag type="success" v-if="item.status == 6">{{$t('lang.statusAutoWithdraw')}}</van-tag>
+                    <van-tag type="primary" v-if="item.status == 7">{{$t('lang.statusPendingWithdraw')}}</van-tag>
+                  </span>
+                </div>
+              </div>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
+      </van-tab>
+    </van-tabs>
+
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#app',
+    i18n,
+    data() {
+      return {
+        category: 0,
+        recordList: [],
+        loading: false,
+        finished: false,
+        refreshing: false,
+        page: 1,
+      };
+    },
+    filters: {
+      ellipsis(value) {
+        if (!value) return ''
+        if (value.length > 20) {
+          return value.slice(0, 20) + '...'
+        }
+        return value
+      }
+    },
+    created() {
+      var that = this;
+      api.addEventListener({
+        name: 'viewappear'
+      }, function (ret, err) {
+        if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+          that.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        }
+      });
+    },
+    methods: {
+      onLoad() {
+        this.refresh();
+      },
+      refresh(reset) {
+        if (reset) {
+          this.recordList = [];
+          this.page = 1;
+          this.finished = false;
+          this.loading = true;
+        }
+        var that = this;
+        POST(getTradeList(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+          category: that.category,
+          page: that.page,
+          limit: 10
+        }, function (ret, err) {
+
+          if (ret.data.length > 0 && ret.data.items.length == 0) {
+            that.finished = true;
+          } else {
+            that.page++;
+            that.recordList = that.recordList.concat(ret.data.items);
+          }
+          that.loading = false;
+          that.refreshing = false;
+          if (that.recordList.length == ret.data.total) {
+            that.finished = true;
+          }
+        }, function (err) {
+          that.loading = false;
+        });
+      },
+      onClickTab(index, title) {
+        this.category = index;
+        this.refresh(true);
+      },
+      copyCode: function (txt) {
+        var clipBoard = api.require('clipBoard');
+        clipBoard.set({
+          value: txt
+        }, function (ret, err) {
+          if (ret) {
+            if (ret.status) {
+              api.toast({
+                msg: i18n.t('lang.copySuccess'),
+                duration: 2000,
+                location: 'bottom'
+              });
+            } else {
+              api.toast({
+                msg: i18n.t('lang.copyError'),
+                duration: 2000,
+                location: 'bottom'
+              });
+            }
+          } else {
+            alertSingle(i18n.t('lang.copyError'));
+          }
+        });
+      },
+      newAddress() {
+        api.openWin({
+          name: 'newAddress',
+          url: './new_address.html',
+          pageParam: {
+            address: api.pageParam.address
+          }
+        });
+      },
+      cancel() {
+        api.closeWin();
+      }
+    },
+  };
+  apiready = function () {
+    window.app = new Vue(vueObj);
+  }
+</script>
+
+</html>

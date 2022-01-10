@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.wallet")}}</title>
+  <script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+
+  <style>
+    .top-panel {     
+      background-image: url('../../image/img/bg_wave.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: center;
+      -webkit-text-align: center;
+      padding-bottom: 8vw;
+      width: 100%;
+      height: 48vw;
+    }
+
+    .btn-img {
+      width: 35px;
+    }
+
+    .btn-name {
+      font-size: 12px;
+      color: #a0732a;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex flex-v" id="wallet" style="width:100%;height:100%">
+    <!-- 余额 -->
+    <div class="flex flex-v top-panel">
+      <div class="flex flex-h flex-center-v" style="width:100%; margin-top: 44px;">
+        <span class="flex-1 flex-left" style="color: white; font-size: 12px;margin-left: 18px;">FEC&nbsp;{{$t('lang.totalAmount')}}</span>
+        <img class="flex-right" src="../../image/img/icon_menu.png" style="width:20px;margin-right: 18px;" @click="toRecord"></img>
+      </div>
+      <div class="text-center" style="color: white;font-size: 24px; margin-top: 20px;font-weight: bold;">{{totalAmount | ellipsis}}</div>
+      <div class="text-center" style="color: white;font-size: 12px; margin-top: 10px;">FEC&nbsp;{{$t('lang.totalAmount')}}&nbsp;&nbsp;
+        <!-- <img src="../../image/img/icon_eye.png" style="width: 15px;"></img> -->
+      </div>
+    </div>
+    <!-- 导航按钮 -->
+    <div class="flex flex-h flex-center-h">
+      <div class="flex flex-v flex-center-v flex-1" @click="toTopup">
+        <img class="btn-img" src="../../image/img/icon_topup_blue.png"></img>
+        <span class="btn-name">{{$t('lang.topup')}}</span>
+      </div>
+      <div class="flex flex-v flex-center-v flex-1" @click="toWithdraw">
+        <img class="btn-img" src="../../image/img/icon_withdraw.png"></img>
+        <span class="btn-name">{{$t('lang.withdraw')}}</span>
+      </div>
+      <div class="flex flex-v flex-center-v flex-1" @click="toUnlock">
+        <img class="btn-img" src="../../image/img/icon_unlock.png"></img>
+        <span class="btn-name">{{$t('lang.unlock')}}</span>
+      </div>
+    </div>
+
+    <van-tabs v-model="category"  @click="onClickTab" title-active-color="#a0732a" title-inactive-color="#000000" color="#a0732a">
+      <!-- A账户记录 -->
+      <van-tab :title="$t('lang.accountA')">
+        <van-pull-refresh v-model="refreshing" @refresh="refresh(true)" style="min-height: 100%; height:100%;" class="flex-1">
+          <van-list v-model="loading" :finished="finished" :finished-text="$t('lang.noMore')" @load="onLoad"
+            style="min-height:100%;height: 100%;">
+            <van-cell v-for="(item, index) in recordList" :key="index">
+              <div class="flex flex-h flex-center-v van-clearfix">
+                <div class="circle-red" v-if="item.amount < 0"></div>
+                <div class="circle-green" v-if="item.amount > 0"></div>
+                <div class="circle-grey" v-if="item.amount == 0"></div>
+                <div class="flex flex-h flex-1 flex-left" style="margin-left: 2vw;">
+                  <div class="flex flex-v">
+                    <span class="flex-left flex-1 txt-core">
+                      <span v-if="item.category == 0">{{$t('lang.statusSystemUpdatedBalance')}}</span>
+                      <span v-if="item.category == 1">{{$t('lang.statusSystemUpdatedFrozen')}}</span>
+                      <span v-if="item.category == 2">{{$t('lang.statusRejectWithdraw')}}</span>
+                      <span v-if="item.category == 3">{{$t('lang.statusGuess')}}</span>
+                      <span v-if="item.category == 4">{{$t('lang.statusUnlock')}}</span>
+                      <span v-if="item.category == 5">{{$t('lang.statusWithdraw')}}</span>
+                      <span v-if="item.category == 6">{{$t('lang.statusGuessPayback')}}</span>
+                      <span v-if="item.category == 7">{{$t('lang.statusGuessFrozen')}}</span>
+                      <span v-if="item.category == 8">{{$t('lang.statusGuessProfit')}}</span>
+                      <span v-if="item.category == 9">{{$t('lang.statusTopup')}}</span>
+                      <span v-if="item.category == 10">{{$t('lang.statusGuessAward')}}</span>
+                    </span>
+                    <span class="flex-left flex-1 txt-desc" style="margin-top:2vw;">{{ item.updatedAt }}</span>
+                  </div>
+                </div>
+                <div class="flex flex-v" style="margin-top: 1vw;">
+                  <span class="flex-right txt-core" style="font-size: 18px;">
+                    <span v-if="item.amount > 0">+</span>{{ item.amount | numCheck(item.category) }}
+                  </span>
+                  <span class="flex-right txt-desc" style="margin-top:2vw;"></span>
+                </div>
+              </div>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
+      </van-tab>
+      <!-- B账户记录 -->
+      <van-tab :title="$t('lang.accountB')">
+        <van-pull-refresh v-model="refreshing" @refresh="refresh(true)" style="min-height: 100%; height:100%;" class="flex-1">
+          <van-list v-model="loading" :finished="finished" :finished-text="$t('lang.noMore')" @load="onLoad"
+            style="min-height:100%;height: 100%;">
+            <van-cell v-for="(item, index) in recordList" :key="index" @click="copyCode(item.txid)">
+              <div class="flex flex-h flex-center-v van-clearfix">
+                <div class="circle-red" v-if="item.amount < 0"></div>
+                <div class="circle-green" v-if="item.amount > 0"></div>
+                <div class="circle-grey" v-if="item.amount == 0"></div>
+                <div class="flex flex-h flex-1 flex-left" style="margin-left: 2vw;">
+                  <div class="flex flex-v">
+                    <span class="flex-left flex-1 txt-core">
+                      <span v-if="item.category == 0">{{$t('lang.statusSystemUpdatedBalance')}}</span>
+                      <span v-if="item.category == 1">{{$t('lang.statusSystemUpdatedFrozen')}}</span>
+                      <span v-if="item.category == 2">{{$t('lang.statusRejectWithdraw')}}</span>
+                      <span v-if="item.category == 3">{{$t('lang.statusGuess')}}</span>
+                      <span v-if="item.category == 4">{{$t('lang.statusUnlock')}}</span>
+                      <span v-if="item.category == 5">{{$t('lang.statusWithdraw')}}</span>
+                      <span v-if="item.category == 6">{{$t('lang.statusGuessPayback')}}</span>
+                      <span v-if="item.category == 7">{{$t('lang.statusGuessFrozen')}}</span>
+                      <span v-if="item.category == 8">{{$t('lang.statusGuessProfit')}}</span>
+                      <span v-if="item.category == 9">{{$t('lang.statusTopup')}}</span>
+                      <span v-if="item.category == 10">{{$t('lang.statusGuessAward')}}</span>
+                    </span>
+                    <span class="flex-left flex-1 txt-desc" style="margin-top:2vw;">{{ item.updatedAt }}</span>
+                  </div>
+                </div>
+                <div class="flex flex-v" style="margin-top: 1vw;">
+                  <span class="flex-right txt-core" style="font-size: 18px;"><span v-if="item.amount > 0">+</span>{{ item.amount | numCheck(item.category) }}</span>
+                  <span class="flex-right txt-desc" style="margin-top:2vw;"></span>
+                </div>
+              </div>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
+      </van-tab>
+    </van-tabs>
+  </div>
+</body>
+
+<script>
+  let jsThat = null
+  var vueObj = {
+    el: '#wallet',
+    i18n,
+    data() {
+      return {
+        totalAmount: 0,
+        walletInfo: null,
+        category: 0,
+        recordList: [],
+        loading: false,
+        finished: false,
+        refreshing: false,
+        page: 1,
+      };
+    },
+    created() {
+      jsThat = this
+    },
+    mounted() {
+      
+    },
+    filters: {
+      ellipsis(data) {
+        if (data != null) {
+          return formatDecimals(data)
+        } else {
+          return data
+        }
+      },
+      numCheck(amount, status) {
+        if (status == 3) {
+          if (amount - parseInt(amount) > 0) {
+            return parseFloat(formatDecimals(amount, 8))
+          } else {
+            return parseInt(amount)
+          }
+        } else {
+          return parseFloat(formatDecimals(amount, 8))
+        }
+      }
+    },
+    methods: {
+      onLoad() {
+        this.refresh();
+      },
+      refresh(reset) {
+        if (reset) {
+          this.recordList = [];
+          this.page = 1;
+          this.finished = false;
+          this.loading = true;
+        }
+        var that = this;
+        POST(getWalletLog(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+          walletType: that.category,
+          page: that.page,
+          limit: 10
+        }, function (ret, err) {
+          if (ret.data.length > 0 && ret.data.items.length == 0) {
+            that.finished = true;
+          } else {
+            that.page++;
+            that.recordList = that.recordList.concat(ret.data.items);
+          }
+          that.loading = false;
+          that.refreshing = false;
+          if (that.recordList.length == ret.data.total) {
+            that.finished = true;
+          }
+        }, function (err) {
+          that.loading = false;
+          that.refreshing = false;
+        });
+        if (this.walletInfo == null) {
+          POST(getWalletAccount(), {
+            token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+            walletType: 0 // A户
+          }, function (ret, err) {
+            that.walletInfo = ret.data[0];
+            that.totalAmount = ret.data[0].total;
+          });
+        }
+
+      },
+      onClickTab(index, title) {
+        this.category = index;
+        this.refresh(true);
+      },
+      toTopup: function () {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'topup',
+          url: './topup.html',
+        })
+      },
+      toWithdraw: function () {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'withdraw',
+          url: './withdraw.html',
+        })
+      },
+      toUnlock: function () {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'unlock',
+          url: './unlock.html',
+        })
+      },
+      toRecord: function () {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'record',
+          url: './record.html',
+        })
+      },
+    },
+  };
+  refreshWalletInfo = function() {
+    var json = api.getPrefs({ sync: true, key: KEY_WALLET_INFO });
+    if (json) {
+      var wi = JSON.parse(json);
+      window.appWallet.$data.totalAmount = wi.total;
+    }
+  };
+  setLanguage = function () {
+    if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+      i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+    }
+  };
+  apiready = function () {
+    window.appWallet = new Vue(vueObj);
+    setLanguage();
+  }
+</script>
+
+</html>

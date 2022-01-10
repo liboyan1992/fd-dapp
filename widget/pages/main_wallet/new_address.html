@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.newAddress")}}</title>
+  <script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+</head>
+
+<body>
+  <div class="flex flex-v" id="app" style="width:100%;height:100%">
+    <div class="topbar flex flex-h flex-center-v">
+      <img class="flex-left topbar-btn btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+      <span class="flex-1 flex-center">{{$t('lang.newAddress')}}</span>
+    </div>
+
+    <div style="margin:3vw 8vw 3vw 8vw">
+      <van-form @submit="onSubmit">
+        <!-- 名称 -->
+        <van-field name="remark" :placeholder="$t('lang.remark')"
+          :rules="[{ required: true, message: $t('lang.pleaseEnterRemark') }]" class="input-field" v-model="remark"
+          maxlength="20"></van-field>
+        <div style="height:2vw"></div>
+        <!-- 地址 -->
+        <van-field name="address" :placeholder="$t('lang.walletAddress')"
+          :rules="[{ required: true, message: $t('lang.pleaseEnterAddress') }]" class="input-field"
+          v-model="address" maxlength="42" ></van-field>
+        <div style="height:2vw"></div>
+        <!-- 网络通道 -->
+        <van-field name="channel" class="input-field" v-model="channel" 
+                  :placeholder="$t('lang.networkChannel')"
+                   size="large" @click="showChannelActoin" readonly clickable></van-field>
+        <div style="height:2vw"></div>
+        <!-- 操作按钮 -->
+        <div style="height:80vw"></div>
+        <van-button type="info" native-type="submit" color="#a0732a" block tapmode>{{$t("lang.confirm")}}</van-button>
+        <div style="height:2vw"></div>
+        <van-button type="default" native-type="button" color="#a0732a" plain @click="cancel()" block plain tapmode>
+          {{$t("lang.cancel")}}</van-button>
+      </van-form>
+      <van-action-sheet v-model="showChannel" :actions="channels" @select="selChannel" />
+    </div>
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#app',
+    i18n,
+    data() {
+      return {
+        remark: '',
+        address: '',
+        channel: '',
+        selectedChannel: 1,
+        showChannel: false,
+        channels: [],
+      };
+    },
+    created: function () {
+      if (api.pageParam.address != '') {
+        this.address = api.pageParam.address;
+      }
+      var that = this;
+      api.addEventListener({
+        name: 'viewappear'
+      }, function (ret, err) {
+        if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+          that.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        }
+      });
+    },
+    methods: {
+      onSubmit(params) {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        params.token = api.getPrefs({ sync: true, key: KEY_TOKEN });
+        params.coinTypeId = this.selectedChannel;
+        POST(getCreateAddress(), params, function (ret, err) {
+          alertSingle(i18n.t("lang.saveSuccess"), function (ret) {
+            api.closeWin();
+          });
+        });
+      },
+      showChannelActoin: function () {
+        var that = this;
+        if (this.channels.length == 0) {
+          POST(getCoinType(), {
+            token: api.getPrefs({ sync: true, key: KEY_TOKEN })
+          }, function (ret, err) {
+            that.channels = ret.data
+            that.showChannel = true
+          });
+        } else {
+          that.showChannel = true
+        }
+      },
+      selChannel: function (item) {
+        this.showChannel = false;
+        this.channel = item.name;
+        this.selectedChannel = item.id;
+      },
+      cancel() {
+        api.closeWin();
+      }
+    },
+  };
+  apiready = function () {
+    window.app = new Vue(vueObj);
+  }
+</script>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.unlock")}}</title>
+  <script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+  <style>
+  </style>
+
+</head>
+
+<body>
+  <div class="flex flex-v" id="app" style="width:100%;height:100%">
+    <div class="topbar flex flex-h flex-center-v">
+      <img class="btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+      <span class="flex-1 flex-center">{{$t('lang.unlock')}}</span>
+    </div>
+
+    <div style="margin:3vw 8vw 3vw 8vw">
+      <van-form @submit="onSubmit">
+        <!-- 数量 -->
+        <div class="panel-title flex flex-h" style="margin-bottom:2vw;">{{$t("lang.amount")}}</div>
+        <van-field name="amount" :rules="[{required: true, message: $t('lang.pleaseEnterAmount') }]"
+          class="input-field flex-1" v-model="amount" readonly>
+        </van-field>
+        <div style="height:2vw"></div>
+        <div class="flex flex-h txt-desc" style="margin-bottom:2vw;">{{$t("lang.lockBalance")}}：{{balance | ellipsis}}</div>
+        
+        <!-- 操作按钮 -->
+        <div class="bottombar">
+          <div class="flex flex-h">
+            <div class="flex flex-v flex-1">
+              <div class="flex flex-h flex-1 flex-center-v">
+                <span style="font-size: 12px; ">{{$t("lang.actualReceive")}}：</span>
+                <span class="flex-1 txt-core" style="font-size: 22px; ">{{amount}}&nbsp;FEC</span>
+              </div>
+            </div>
+            <van-button type="info" native-type="submit" color="#a0732a" style="margin-right: 8vw; width: 30vw;" tapmode>{{$t("lang.fetch")}}</van-button>
+          </div>
+        </div>
+      </van-form>
+    </div>
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#app',
+    i18n,
+    data() {
+      return {
+        amount: 0,
+        balance: 0,
+        ratio: 0.1,
+      };
+    },
+    created: function() {
+      var that = this;
+      api.addEventListener({
+        name: 'viewappear'
+      }, function (ret, err) {
+        if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+          that.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        }
+      });
+      POST(getSysArgs(), {
+        token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+        key: 'unlockRatio'
+      }, function (ret, err) {
+        that.ratio = ret.data;
+      });
+      POST(getWalletAccount(), {
+        token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+        walletType: 1 // B户
+      }, function (ret, err) {
+        that.balance = ret.data[0].total;
+        that.amount = formatDecimals(that.balance * that.ratio, 8);
+      }); 
+    },
+    filters: {
+      ellipsis(data) {
+        if (data != null) {
+          return formatDecimals(data)
+        } else {
+          return data;
+        }
+      }
+    },
+    methods: {
+      onSubmit(params) {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        POST(getUnlock(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+        }, function (ret, err) {
+          alertSingle(i18n.t("lang.unlockSuccess"), function (ret) {
+          });
+        });
+      },
+      cancel() {
+        api.closeWin();
+      }
+    },
+  };
+  apiready = function () {
+    window.app = new Vue(vueObj);
+  }
+</script>
+
+</html>

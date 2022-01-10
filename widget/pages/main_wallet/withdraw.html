@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.withdraw")}}</title>
+  <script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+  <style>
+  </style>
+
+</head>
+
+<body>
+  <div class="flex flex-v" id="app" style="width:100%;height:100%">
+    <div class="topbar flex flex-h flex-center-v">
+      <img class="btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+      <span class="flex-1 flex-center">{{$t('lang.withdraw')}}</span>
+    </div>
+
+    <div style="margin:3vw 8vw 3vw 8vw">
+      <van-form @submit="onSubmit">
+        <!-- 地址 -->
+        <div class="panel-title flex flex-h" style="margin-bottom:2vw;">
+          {{$t("lang.address")}}&nbsp;
+          <van-icon name="scan" color="#a0732a"  size="25" @click="scan"/>
+        </div>
+        <van-field name="address"
+          :rules="[{required: true, message: $t('lang.pleaseEnterAddress') }]" 
+          @input="onAddressChanged"
+          class="input-field flex-1"
+          v-model="address">
+          <template #button>
+            <van-icon name="notes-o" color="#a0732a" size="25"  @click="addressBook"/>
+          </template>
+        </van-field>
+        <div style="height:2vw"></div>
+        <!-- 网络通道 -->
+        <div class="panel-title" style="margin-bottom:2vw;">{{$t("lang.networkChannel")}}</div>
+        <div style="height:2vw"></div>
+        <van-field name="channel"
+                   class="input-field" 
+                   v-model="channel"
+                   size="large"
+                   @click="showChannelActoin"
+                   readonly
+									 clickable></van-field>
+        <div style="height:2vw"></div>
+        <!-- 数量 -->
+        <div class="panel-title" style="margin-bottom:2vw;">{{$t("lang.amount")}}</div>
+        <van-field name="amount" 
+                   :rules="[{required: true, message: $t('lang.pleaseEnterAmount') }]" 
+                   @input="onInput"
+                   class="input-field"
+                   v-model="amount" 
+                   maxlength="40" 
+                   size="large"></van-field>
+        <div style="height:2vw"></div>
+        
+        <!-- 操作按钮 -->
+        <div class="bottombar">
+          <div class="flex flex-h">
+            <div class="flex flex-v flex-1">
+              <div class="flex flex-h flex-1 flex-center-v">
+                <span style="font-size: 12px; ">{{$t("lang.actualReceive")}}：</span>
+                <span class="flex-1 txt-core" style="font-size: 22px; ">{{amountFact}}&nbsp;FEC</span>
+              </div>
+              <div class="flex-1 " style="font-size: 12px; ">{{$t("lang.fee")}}&nbsp;{{amountFee}}&nbsp;FEC</div>
+            </div>
+            <van-button type="info" 
+                        native-type="submit" 
+                        style="margin-right: 8vw; width: 30vw;" 
+                        color="#a0732a" 
+                        v-bind:disabled="!withdrawable" tapmode>{{$t("lang.withdraw")}}</van-button>
+          </div>
+        </div>
+      </van-form>
+      <!-- <van-number-keyboard :show="showKeyboard" @blur="showKeyboard = false" @input="onInput" @delete="onDelete" /> -->
+      <van-action-sheet v-model="showChannel" :actions="channels" @select="selChannel" />
+      
+    </div>
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#app',
+    i18n,
+    data() {
+      return {
+        address: '',
+        amount: 0, // 输入数量
+        amountFact: 0, // 实际数量
+        amountFee: 0, // 手续费数量
+        channel: '',
+        selectedChannel: 1,
+        showChannel: false,
+        channels: [],
+        withdrawable: true,
+        minCount: 1,
+        fee: 0.1
+        // showKeyboard: false
+      };
+    },
+    created: function () {
+      var that = this;
+      api.addEventListener({
+        name: 'viewappear'
+      }, function (ret, err) {
+        if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+          that.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        }
+      });
+      api.addEventListener({
+        name: 'selectAddress'
+      }, function (ret, err) {
+        that.address = api.getPrefs({ sync: true, key: KEY_ADDRESS })
+      });
+    },
+    methods: {
+      onSubmit(params) {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        params.token = api.getPrefs({ sync: true, key: KEY_TOKEN });
+        params.coinTypeId = this.selectedChannel;
+        POST(getWithdrawal(), params, function (ret, err) {
+          api.execScript({
+            frameName: 'wallet',
+            script: 'refreshWalletInfo();'
+          });
+          alertSingle(i18n.t("lang.sentSuccess"), function (ret) {
+            api.closeWin();
+          });
+        });
+      },
+      addressBook: function() {
+        var that = this;
+        api.openWin({
+          name: 'addressBook',
+          url: './address_book.html',
+          pageParam: {
+            address: that.address
+          }
+        });
+      },
+      scan:function () {
+        var that = this;
+        var FNScanner = api.require('FNScanner');
+        FNScanner.open({
+          autorotation: true
+        }, function (ret, err) {
+          if (ret) {
+            if (ret.eventType == 'success') {
+              that.address = ret.content;
+            }
+          }
+        });
+      },
+      showChannelActoin: function () {
+        var that = this;
+        if (this.channels.length == 0) {
+          POST(getCoinType(), {
+            token: api.getPrefs({ sync: true, key: KEY_TOKEN })
+          }, function (ret, err) {
+            that.channels = ret.data;
+            that.showChannel = true;
+          });
+        } else {
+          that.showChannel = true
+        }
+      },
+      selChannel: function (item) {
+        this.showChannel = false;
+        this.channel = item.name;
+        this.selectedChannel = item.id;
+        this.withdrawable = item.iswithdraw == 1 ? true : false;
+        this.minCount = item.minCount;
+        this.fee = item.fee;
+        this.checkAddress();
+      },
+      onInput(value) {
+        if (value != "") {
+          this.amountFee = value * this.fee;
+          this.amountFact = value - this.amountFee;
+        } else {
+          this.amountFee = 0;
+          this.amountFact = 0;
+        }
+      },
+      onAddressChanged(value) {
+        this.checkAddress();  
+      },
+      checkAddress() {
+        var that = this;
+        if (this.channel != "" && this.address != "") {
+          POST(getAddressIsInternal(), {
+            token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+            coinTypeId: this.selectedChannel,
+            address: this.address
+          }, function (ret, err) {
+            if (ret.data == 1) {
+              that.fee = 0.001;
+            }
+            that.onInput(that.amount);
+          });
+        }
+      },
+      onDelete() {
+        if (this.amount != '') {
+          this.amount = this.amount.slice(0, -1);
+        }
+      },
+      cancel() {
+        api.closeWin();
+      }
+    },
+  };
+  apiready = function () {
+    window.app = new Vue(vueObj);
+  }
+</script>
+
+</html>

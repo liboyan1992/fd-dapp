@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>{{$t("lang.register")}}</title>
+	<script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+	
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+	<script src="../../script/jquery.min.js"></script>
+	<script src="../../script/jquery.md5.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/webservice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/app.css" />
+</head>
+<body>
+	<div class="flex flex-v" id="app" style="width:100%;height:100%">
+		<div class="flex flex-v flex-center flex-center-v flex-center-h" style="margin-top:20vw">
+			<van-icon name="../../image/img/logo.png" size="80"></van-icon>
+			<div style="margin-top:5vw;font-size:25px;color: #a0732a; font-weight: bold;">FIVE ELEMENTS</div>
+		</div>
+
+		<div style="margin:20vw 8vw 3vw 8vw">
+			<van-form @submit="onSubmit">
+				<van-field name="username" 
+									 :placeholder="$t('lang.ume')" 
+									 :rules="[{required: true, message: $t('lang.pleaseEnterUsername') }]"
+									 class="input-field" 
+									 v-model="username" 
+									 maxlength="40" 
+									 size="large"></van-field>
+				<div style="height:2vw"></div>
+				<van-field name="password" 
+									 :placeholder="$t('lang.password')" 
+									 :rules="[{ required: true, message: $t('lang.pleaseEnterPassword') }]"
+									 class="input-field" 
+									 v-model="password" 
+									 maxlength="20" 
+									 type="password"></van-field>
+				<div style="height:2vw"></div>
+				<div class="flex">
+					<van-checkbox name="agree" v-model="agree"></van-checkbox>
+					<span class="txt-desc">&nbsp;&nbsp;</span>
+					<span tapmode @click="goProtocol()" class="txt-desc">{{$t("lang.userAgreement")}}</span>
+					<span tapmode @click="goForgotPassword()" class="flex-1 flex-right txt-desc" >{{$t("lang.forgotPassword")}}?</span>
+				</div>
+				<div style="height:40vw"></div>
+				<van-button type="info" native-type="submit" color="#a0732a"  block tapmode>{{$t("lang.login")}}</van-button>
+				<div style="height:2vw"></div>
+				<van-button type="default" native-type="button" color="#a0732a" plain @click="goRegister()" block tapmode>{{$t("lang.register")}}</van-button>
+				<div style="height:2vw"></div>
+				<van-button type="default" native-type="button" color="#a0732a" plain icon="../../image/img/lan.png" @click="showLang = true" block tapmode>{{$t("lang.language")}} - {{language}}</van-button>
+			</van-form>
+			<div class="flex flex-v flex-center flex-center-v flex-center-h" style="margin-top:10vw">
+				<div style="font-size:14px;color:#c8c8c8;">{{$t("lang.banChina")}}</div>
+			</div>
+			<div>
+			<van-action-sheet 
+				v-model="showLang" 
+				:actions="languages" 
+				@select="selLanguage" />
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+	var vueObj = {
+		el: '#app',
+		i18n,
+		data() {
+			return {
+				username: '',
+				password: '',
+				agree: false,
+				showLang: false,
+				language: '简体中文',
+				selLang: 'zh-CN',
+				languages: [{ name: '简体中文', val: 'zh-CN' }, { name: '繁體中文', val: 'zh-TW' }, { name: 'English', val: 'en-US' }, { name: '日本', val: 'ja' }, { name: '한국인', val: 'ko' }, { name: 'عربى', val: 'ar' }, { name: 'Melayu', val: 'ms' }, { name: 'Türkçe', val: 'tr' }, { name: 'Tiếng Việt', val: 'vi' }, { name: 'Indonesia', val: 'id' }],
+			};
+		},
+		created() {
+			var that = this;
+			api.addEventListener({
+				name: 'viewappear'
+			}, function (ret, err) {
+				if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+					that.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+				}
+			});
+			
+			if (!api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+				api.setPrefs({
+					key: KEY_LANGUAGE,
+					value: 'cn'
+				})
+			}
+			api.addEventListener({
+				name: 'viewappear'
+			}, function (ret, err) {
+				if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+					that.$i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+					if (that.$i18n.locale == 'cn') {
+						that.selLang = "zh-CN";
+						that.language = "简体中文"
+					} else if (that.$i18n.locale == 'tw') {
+						that.selLang = "zh-TW"
+						that.language = "繁體中文"
+					} else if (that.$i18n.locale == 'en') {
+						that.selLang = "en-US"
+						that.language = "English"
+          }else if (that.$i18n.locale == 'ja') {
+            that.selLang = "ja"
+            that.language = "日本"
+          }else if (that.$i18n.locale == 'ko') {
+            that.selLang = "ko"
+            that.language = "한국인"
+          }else if (that.$i18n.locale == 'ar') {
+            that.selLang = "ar"
+            that.language = "عربى"
+          }else if (that.$i18n.locale == 'ms') {
+            that.selLang = "ms"
+            that.language = "Melayu"
+          }else if (that.$i18n.locale == 'tr') {
+            that.selLang = "tr"
+            that.language = "Türkçe"
+          }else if (that.$i18n.locale == 'vi') {
+            that.selLang = "vi"
+            that.language = "Tiếng Việt"
+          }else if (that.$i18n.locale == 'id') {
+            that.selLang = "id"
+            that.language = "Indonesia"
+          }
+				}
+				that.sendTxt = i18n.t("lang.send");
+				that.regions = [{ name: i18n.t("lang.regionApac"), val: 'apac' }, { name: i18n.t("lang.regionEmea"), val: 'emea', disabled: true }, { name: i18n.t("lang.regionAmericas"), val: 'americas', disabled: true }]
+				for (const reg of that.regions) {
+				if (reg.val == that.selReg) {
+					that.region = reg.name;
+				}
+				}
+			});
+
+		},
+		methods: {
+			onSubmit(params) {
+				api.notification({
+					vibrate: [100, 500],
+					sound: 'widget://sound/ding.mp3'
+				});
+				if (this.agree) {
+					POST(getLogin(), params, function (ret, err) {
+						// 缓存用户登录信息
+						api.setPrefs({
+							key: KEY_TOKEN,
+							value: ret.data.token
+						})
+						api.setPrefs({
+							key: KEY_LOGIN_USER, 
+							value: ret.data
+						});
+						api.closeWin();
+					});
+				} else {
+					alertSingle(i18n.t("lang.pleaseCheckAgreement"));
+				}
+			},
+			selLanguage(item) {
+				this.showLang = false;
+				this.language = item.name;
+				this.selLang = item.val;
+				if (item.val == 'zh-CN') {
+					this.$i18n.locale = 'cn';
+				} else if (item.val == 'zh-TW') {
+					this.$i18n.locale = 'tw';
+				} else if (item.val == 'en-US') {
+					this.$i18n.locale = 'en';
+        } else if (item.val == 'ja') {
+          this.$i18n.locale = 'ja';
+        } else if (item.val == 'ko') {
+          this.$i18n.locale = 'ko';
+        } else if (item.val == 'ar') {
+          this.$i18n.locale = 'ar';
+        } else if (item.val == 'ms') {
+          this.$i18n.locale = 'ms';
+        } else if (item.val == 'tr') {
+          this.$i18n.locale = 'tr';
+        } else if (item.val == 'vi') {
+          this.$i18n.locale = 'vi';
+        } else if (item.val == 'id') {
+          this.$i18n.locale = 'id';
+        }
+				api.setPrefs({
+					key: KEY_LANGUAGE,
+					value: this.$i18n.locale
+				})
+			},
+			valUsername(val) {
+				var rt = false;
+				if (val != "") {
+					rt = true;
+				}
+				return rt;
+			},
+			valPassword(val) {
+				var rt = false;
+				if (rt != "") {
+					val = true;
+				}
+				return rt;
+			},
+			onFailed(errorInfo) {
+				
+			},
+			goForgotPassword() {
+				api.openWin({
+					name: 'forgot_password',
+					url: './forgot_password.html'
+				});
+			},
+			goProtocol(){
+				api.openWin({
+					name: 'web',
+					url: '../common/web.html',
+					pageParam: {
+						title: i18n.t('lang.userAgreement'),
+						link: URL_PROTOCOL
+					}
+				});
+			},
+			goRegister(){
+				api.openWin({
+					name: 'register',
+					url: './register.html'
+				});
+			}
+		},
+	};
+	apiready = function () {
+		window.app = new Vue(vueObj);		
+	}
+</script>
+
+</html>

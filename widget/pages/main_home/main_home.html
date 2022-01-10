@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>{{$t("lang.homepage")}}</title>
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+    <script src="../../script/vue.min.js"></script>
+    <script src="../../script/vue-p5.min.js"></script>
+      <script src="../../script/vue-i18n.min.js"></script>
+      <script src="../../script/vant.min.js"></script>
+      <script src="../../i18n/zh-cn.js"></script>
+      <script src="../../i18n/zh-tw.js"></script>
+      <script src="../../i18n/en.js"></script>
+      <script src="../../i18n/ja.js"></script>
+      <script src="../../i18n/ko.js"></script>
+      <script src="../../i18n/ar.js"></script>
+      <script src="../../i18n/ms.js"></script>
+      <script src="../../i18n/tr.js"></script>
+      <script src="../../i18n/vi.js"></script>
+      <script src="../../i18n/id.js"></script>
+    <script src="../../script/jquery.min.js"></script>
+    <script src="../../script/jquery.md5.js"></script>
+    <script src="../../script/api.js"></script>
+    <script src="../../script/webservice.js"></script>
+
+    <style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+
+    .main-home {
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 40px;
+        display: flex;
+        max-height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .user-info {
+        padding: 20px;
+        display: flex;
+    }    
+    .user-avatar {
+        width: 30px;
+        height: 30px;        
+    }
+    .user-balance {
+        font-size: 15px;
+        font-weight: bold;
+        color: #a0732a;
+        margin-top: 6px;
+        flex: 1;
+    }
+    .draw-area {
+        width: 100%;
+        margin-top: 20px;
+        flex: 1;
+    }
+    canvas {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        display: block;
+    }
+    .round-info {
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 20px;
+        margin: 15px;
+        color: #a0732a;
+        padding: 5px;
+    }
+    .btn-large {
+        text-align: center;
+        font-size: 12px;
+        color: #fff;
+        background-color: rgba(64,142,255);
+        padding: 10px;
+        position: fixed;
+        width: 80%;
+        bottom: 10%;
+        align-self: center;
+    }
+    </style>
+</head>
+<body>
+    <div id='home' class='main-home'>
+        <div class="user-info">
+            <img class="user-avatar" src="../../image/img/taiji-small.png" alt=""/>
+            <div class="user-balance">{{balance| ellipsis}}</div>
+            <div class="pull-right">
+                <van-icon name="music" :color="musicColor" size="25" @click="toggleMusic"/>&nbsp;
+            </div>
+            <div class="pull-right">
+                <van-icon name="friends" color="#a0732a"  size="25" @click="toFriends"/>
+            </div>
+        </div>
+        <vue-p5 class="draw-area"
+                @preload="preload"
+                @setup="setup"
+                @draw="draw"
+                @click="toGuess"></vue-p5>
+        <div class="round-info">
+            <div class="flex flex-h flex-center">
+                <span>{{$t('lang.finishTime')}}：{{finishTime}} | {{$t('lang.leftTime')}}：</span>
+                <van-count-down :time="leftTime" style="font-size: 12px;font-weight: bold;color: #a0732a;"></van-count-down>
+            </div>
+        </div>
+        <div style="margin:8vw 8vw 3vw 8vw">
+            <div class="btn-normal" @click="toGuess" tapmode>{{$t("lang.game")}}</div>
+            <div style="height:4vw"></div>
+            <div class="btn-normal" @click="toRanking" tapmode>{{$t("lang.ranking")}}</div>
+        </div>
+    </div>
+</body>
+<script>
+    var WIDTH = window.innerWidth; // 画布宽
+    var HEIGHT = WIDTH; // 画布高
+    var RADIUS = Math.PI * 2;
+    var theta = 0; // 中心太极圆的旋转角度
+    var NB_POINT = 40000; // 五行元素旋转轨迹圆的等份比例
+    var ANGLE_STEP = 360 / NB_POINT; // 五行元素旋转轨迹圆的等份比例后的每份角度
+    var angle = ANGLE_STEP; // 五行元素旋转轨迹圆的旋转角度
+    var CENTER_X = WIDTH / 2; // 画布中心点X坐标
+    var CENTER_Y = HEIGHT / 2; // 画布中心点Y坐标
+    var r = 40; // 五行元素圆的半径
+    var _r = (WIDTH - 50 * 2) / 2; // 五行元素旋转轨迹圆的半径
+    var taijiR = 120;
+    let imgGold; // 金
+    let imgWood; // 木
+    let imgWater; // 水
+    let imgFire; // 火
+    let imgSoil; // 土
+    let imgTaiji; // 太极
+    let imgBagua; // 八卦
+    var admob; // 广告
+    var audioStreamer; // 音频
+
+    var vueObj = {
+        el: '#home',
+        i18n,
+        data() {
+            return {
+                balance: 0,
+                finishTime: "0000/00/00 00:00:00",
+                leftTime: 0,
+                guessId: 0,
+                retry: false,
+                rOffset: 90,
+                isReplay: false,
+                music: true,
+                musicColor: '#a0732a',
+            };
+        },
+        created() {
+            var that = this;
+            api.addEventListener({
+                name: 'viewappear'
+            }, function (ret, err) {
+                that.refresh();
+            });
+            api.addEventListener({
+                name: 'pause'
+            }, function (ret, err) {
+                audioStreamer.pause()
+                that.musicColor = '#c8c8c8';
+            });
+            api.addEventListener({
+                name: 'resume'
+            }, function (ret, err) {
+                if (that.music) {
+                    if (api.systemType == 'android') {
+                        audioStreamer.openPlayer({
+                            path: 'widget://sound/bg.mp3',
+                        }, function (ret) {
+                            log("audioStreamer === " + JSON.stringify(ret))
+                        });
+                    } else {
+                        audioStreamer.resume()
+                    }
+                    that.musicColor = '#a0732a';
+                }
+            });
+            api.setRefreshHeaderInfo({
+                // loadingImg: 'widget://image/refresh.png',
+                bgColor: '#ccc',
+                textColor: '#fff',
+                textDown: i18n.t('lang.pullRefresh') + '...',
+                textUp: i18n.t('lang.releaseRefresh') + '...',
+            }, function (ret, err) {
+                api.refreshHeaderLoadDone();
+                that.refresh();
+            });
+            admob = api.require('admob');
+            audioStreamer = api.require('audioStreamer');
+            if (api.getPrefs({ sync: true, key: KEY_MUSIC }) == "pause") {
+                this.music = false;
+                that.musicColor = '#c8c8c8';
+            }
+        },
+        mounted() {
+            api.addEventListener({
+                name: 'tabframe'
+            }, function (ret, err) {
+                if (ret.name == 'wallet' || ret.name == 'user') {
+                    var frameName = ret.name;
+                    var funName = frameName.replace(frameName[0], frameName[0].toUpperCase())
+                    var refreshFun = 'refresh' + funName + 'Info();';
+                    api.execScript({
+                        frameName: frameName,
+                        script: refreshFun
+                    });
+                }
+            });
+            this.refresh();  
+            this.playSound();
+        },
+        filters: {
+            ellipsis(data) {
+                if (data != null) {
+                    return formatDecimals(data)
+                } else {
+                    return data;
+                }
+            }
+        },
+        methods: {
+           playSound() {
+                if (this.music) {
+                    audioStreamer.openPlayer({ path: 'widget://sound/bg.mp3' });
+                }
+                audioStreamer.setLoop({ loop: true });
+            },
+            toggleMusic() {
+                if (this.music) {
+                    audioStreamer.pause()
+                    this.music = false;
+                    this.musicColor = '#c8c8c8';
+                } else {
+                    if (api.systemType == 'android') {
+                        audioStreamer.openPlayer({path: 'widget://sound/bg.mp3'});
+                    } else {
+                        audioStreamer.openPlayer({ path: 'widget://sound/bg.mp3' });
+                        audioStreamer.resume()
+                    }
+                    this.music = true;
+                    this.musicColor = '#a0732a';
+                }
+                
+                if (this.music) {
+                    api.setPrefs({ key: KEY_MUSIC, value: "play"});
+                } else {
+                    api.setPrefs({ key: KEY_MUSIC, value: "pause" });
+                }
+            },
+            refresh() {
+                var that = this;
+                setTimeout(function () {
+                    POST(getCurrentRound(), {
+                        token: api.getPrefs({ sync: true, key: KEY_TOKEN })
+                    }, function (ret, err) {
+                        that.isReplay = ret.data.isReplay == 1; 
+                        that.guessId = ret.data.id;
+                        that.finishTime = ret.data.endTime.replace('-', '/').replace('-', '/');
+                        var now = new Date();
+                        var end = new Date(that.finishTime)
+                        that.leftTime = end.getTime() - now.getTime();
+                        api.setPrefs({
+                            key: KEY_GUESS_ID,
+                            value: that.guessId
+                        });
+                        setTimeout(function () {
+                            POST(getWalletAccount(), {
+                                token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+                                walletType: 0 // A户
+                            }, function (ret, err) {
+                                var wi = ret.data[0];
+                                that.balance = wi.total;
+                                api.setPrefs({
+                                    key: KEY_WALLET_INFO,
+                                    value: wi
+                                });
+                            });
+                        }, 500);
+                    }, function (err) {
+                        if (that.retry) {
+                            that.retry = false;
+                            that.refresh();
+                        }
+                    });    
+                }, 500);
+            },
+            preload(sketch) {
+                imgGold = sketch.loadImage('https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/wood.png');
+                imgWood = sketch.loadImage('https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/fire.png');
+                imgWater = sketch.loadImage('https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/soil.png');
+                imgFire = sketch.loadImage('https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/gold.png');
+                imgSoil = sketch.loadImage('https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/water.png');
+                imgTaiji = sketch.loadImage('https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/taiji.png');
+                imgBagua = sketch.loadImage('https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/bagua.png');
+                
+                WIDTH = HEIGHT = api.winWidth;
+                CENTER_X = WIDTH / 2; // 画布中心点X坐标
+                CENTER_Y = WIDTH / 2; // 画布中心点Y坐标
+                _r = (WIDTH - (50 * 2)) / 2; // 五行元素旋转轨迹圆的半径
+            },
+            setup(sketch) {
+                HEIGHT = WIDTH = api.winWidth;
+                let canvas = sketch.createCanvas(WIDTH, WIDTH);
+                // canvas.parent('canvas');
+                sketch.rectMode(WIDTH/2);
+                sketch.noFill();
+                sketch.noStroke();
+            },
+            draw(sketch) {
+                sketch.clear();
+                sketch.image(imgBagua, 0, 0, WIDTH, HEIGHT);
+                // this.taiji(sketch);
+                this.wuxing(0, imgGold, sketch); // 金
+                this.wuxing(1, imgWood, sketch); // 木
+                this.wuxing(2, imgWater, sketch); // 水
+                this.wuxing(3, imgFire, sketch); // 火
+                this.wuxing(4, imgSoil, sketch); // 土
+
+                angle += ANGLE_STEP;
+                if (angle > RADIUS) {
+                    angle = 0;
+                }
+            },
+            taiji(sketch) {
+                sketch.push();
+                sketch.translate(WIDTH / 2, HEIGHT / 2);
+                theta = theta + 0.01;
+                let c = theta + Math.PI;
+                sketch.rotate(-c);
+                sketch.image(imgTaiji, -(taijiR / 2), -(taijiR / 2), taijiR, taijiR);
+                sketch.pop();
+            },
+            wuxing(s, img, sketch) {
+                var offset = ANGLE_STEP * 144 * s;
+                var x = _r * Math.cos(angle + offset) + CENTER_X + r;
+                var y = _r * Math.sin(angle + offset) + CENTER_Y + r;
+                sketch.image(img, x - this.rOffset, y - this.rOffset , 100, 100);
+            },
+            toGuess(e) {
+                api.notification({
+                    vibrate: [100, 500],
+                    sound: 'widget://sound/ding.mp3'
+                });
+                // 如果逆盘赛，检查资质
+                if (this.isReplay) {
+                    POST(getReplayGuessCheck(), {
+                        token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+                    }, function (ret, err) {
+                        if(ret.data) {
+                            api.openWin({
+                                name: 'guess',
+                                url: './guess.html',
+                                pageParam: {
+                                    guessId: this.guessId
+                                }
+                            })
+                        }
+                    });
+                } else {
+                    api.openWin({
+                        name: 'guess',
+                        url: './guess.html',
+                        pageParam: {
+                            guessId: this.guessId
+                        }
+                    })
+                }
+            },
+            toRanking() {
+                var that = this;
+                api.notification({
+                    vibrate: [100, 500],
+                    sound: 'widget://sound/ding.mp3'
+                });
+                api.openWin({
+                    name: 'web',
+                    url: '../common/web.html',
+                    pageParam: {
+                        title: "ADS",
+                        link: URL_ADS,
+                        guessId: that.guessId
+                    }
+                });
+                // this.initInterstitial();
+            },
+            toFriends() {
+                api.openWin({
+                    name: 'friends',
+                    url: './friends.html'
+                });
+            },
+            startBanner() {
+                var adUnitID = 'ca-app-pub-5743539110723541/3927300129';
+                var param = {
+                    rect: {
+                        x: 0,
+                        y: 300,
+                        w: api.frameWidth,
+                        h: 50
+                    },
+                    adUnitID: adUnitID,
+                    fixedOn: api.frameName,
+                    fixed: true
+                };
+                admob.startBanner(param, function (ret, err) {
+                    //alert(JSON.stringify(ret));
+                    api.toast({
+                        msg: JSON.stringify(ret)
+                    });
+                });
+		    },
+            hideBanner() {
+                admob.hideBanner(function (ret, err) {
+                    api.toast({
+                        msg: JSON.stringify(ret) + "   " + JSON.stringify(err)
+                    });
+                });
+            },
+            showBanner() {
+                admob.showBanner(function (ret, err) {
+                    api.toast({
+                        msg: JSON.stringify(ret) + "   " + JSON.stringify(err)
+                    });
+                });
+            },
+            closeBanner() {
+                admob.closeBanner(function (ret, err) {
+                    api.toast({
+                        msg: JSON.stringify(ret) + "   " + JSON.stringify(err)
+                    });
+                });
+            },
+            initInterstitial() {
+                var that = this;
+                // var adUnitID = 'ca-app-pub-5743539110723541/9562770182'; 
+                var adUnitID = 'ca-app-pub-3940256099942544/1033173712'; // test
+                
+                admob.initInterstitial({
+                    adUnitID: adUnitID
+                }, function (ret, err) {
+                    that.startInterstitial();
+                });
+            },
+            startInterstitial() {
+                var that = this;
+                admob.startInterstitial(function (ret, err) {
+                    setTimeout(function(){
+                        api.openWin({
+                            name: 'ranking',
+                            url: './ranking.html',
+                            pageParam: {
+                                guessId: that.guessId
+                            }
+                        })
+                    }, 3000);
+                });
+            }
+        },
+    };
+    setLanguage = function () {
+        if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+            i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+            api.setTabBarItemAttr({
+                index: 0,
+                text: i18n.t('lang.tabTitle1')
+            });
+            api.setTabBarItemAttr({
+                index: 1,
+                text: i18n.t('lang.tabTitle2')
+            });
+            api.setTabBarItemAttr({
+                index: 2,
+                text: i18n.t('lang.tabTitle3')
+            });
+            api.setTabBarItemAttr({
+                index: 3,
+                text: i18n.t('lang.tabTitle4')
+            });
+        }
+    }
+    apiready = function () {
+        window.appHome = new Vue(vueObj);
+        setLanguage();
+    }
+</script>
+</html>

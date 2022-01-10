@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.register")}}</title>
+	<script src="../../script/vue.min.js"></script>
+	<script src="../../script/vue-i18n.min.js"></script>
+	<script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+
+  <style>
+    html,body{height: 100%;width: 100%;margin:0;padding:0;}
+    body{
+      background:url(../../image/img/bg.png)no-repeat;
+      width:100%;
+      height:100%;
+      background-size:100% 100%;
+      position:absolute;
+    }
+        
+    .top-panel {
+      background-image: url('../../image/img/bg_user.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: center;
+      -webkit-text-align: center;
+      padding-bottom: 8vw;
+      width: 100%;
+    }
+
+    .bg-notice {
+      background:url('../../image/img/bg_notice.png') center center / cover no-repeat;
+      width: 89%;
+      height: 12vw;
+      line-height: 12vw;
+      padding-left: 10vw;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: left;
+      -webkit-text-align: left;
+      font-size: small;    
+    }
+
+    .btn-img {
+      width: 24px;
+    }
+
+    .btn-name {
+      margin-top: 4vw;
+      font-size: 10px;
+      color: #dcdcdc;
+      font-weight: bold;
+    }
+
+    .btn-guide {
+      /* background-image: url('../../image/img/bg_guide.png'); */
+      background-repeat: no-repeat;
+      background-size: cover;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: center;
+      -webkit-text-align: center;
+      width: 100%;
+      height: 26vw;
+      margin-right: 2vw;
+    }
+    .btn-mailbox {
+      /* background-image: url('../../image/img/bg_mailbox.png'); */
+      background-repeat: no-repeat;
+      background-size: cover;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: center;
+      -webkit-text-align: center;
+      width: 100%;
+      height: 23vw;
+    }
+    .btn-lock {
+      /* background-image: url('../../image/img/bg_lock.png'); */
+      background-repeat: no-repeat;
+      background-size: cover;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: center;
+      -webkit-text-align: center;
+      width: 100%;
+      height: 23vw;
+    }
+    .btn-lang {
+      /* background-image: url('../../image/img/bg_lang.png'); */
+      background-repeat: no-repeat;
+      background-size: cover;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: center;
+      -webkit-text-align: center;
+      width: 100%;
+      height: 14vw;
+      margin-right: 2vw;
+    }
+    .btn-about {
+      /* background-image: url('../../image/img/bg_about.png'); */
+      background-repeat: no-repeat;
+      background-size: cover;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: center;
+      -webkit-text-align: center;
+      width: 100%;
+      height: 14vw;
+      margin-left: 2vw;
+    }
+    .btn-title {
+      width: 100%;
+      margin-left:2vw; 
+      margin-top: 2vw;
+    }
+    .btn-desc{
+      width:100%; 
+      margin-left:2vw; 
+      margin-top: 2vw;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex flex-v" id="user" style="width:100%;height:100%;">
+    <div class="flex flex-v top-panel">
+      <div class="flex flex-h flex-center-v" style="width:100%; margin-top: 14vw;">
+        <div class="flex flex-v flex-1 flex-left" style="padding-left: 5vw;">
+          <span class="flex-left" style="width: 100%; color:#fff; font-size: 20px;font-weight: bold;">{{$t('lang.welcome')}}</span>
+          <span class="flex-left" style="width: 100%; color:#fff; font-size: 12px;margin-top: 2vw;">{{username}}</span>
+        </div>
+        <van-image round fit="cover" width="64px" height="64px" :src="avatar" class="flex-right" @click="toInfo" style="width:64px;padding-right:4vw;" />
+      </div>
+      <div class="flex flex-h flex-center-h" style="width:100%; margin-top: 8vw;">
+        <div class="flex flex-v flex-center-v flex-1" @click="toRanking">
+          <img class="btn-img" src="../../image/img/icon_rank.png"></img>
+          <span class="btn-name">{{$t('lang.ranking')}}</span>
+        </div>
+        <div class="flex flex-v flex-center-v flex-1" @click="toGuess">
+          <img class="btn-img" src="../../image/img/icon_guess.png"></img>
+          <span class="btn-name">{{$t('lang.game')}}</span>
+        </div>
+        <div class="flex flex-v flex-center-v flex-1" @click="toTopup">
+          <img class="btn-img" src="../../image/img/icon_topup.png"></img>
+          <span class="btn-name">{{$t('lang.topup')}}</span>
+        </div>
+        <div class="flex flex-v flex-center-v flex-1" @click="toRecord">
+          <img class="btn-img" src="../../image/img/icon_record.png"></img>
+          <span class="btn-name">{{$t('lang.record')}}</span>
+        </div>
+        <div class="flex flex-v flex-center-v flex-1" @click="toMission">
+          <img class="btn-img" src="../../image/img/icon_checkin.png"></img>
+          <span class="btn-name">{{$t('lang.mission')}}</span>
+        </div>
+      </div>
+      <div class="flex flex-h flex-center-h" style="width:100%; margin-top: 8vw;">
+        <div class="flex flex-v flex-1">
+          <span class="txt-desc" style="font-size: small; padding-bottom: 2vw;">{{$t('lang.balance')}}</span>
+          <span class="txt-core" style="font-weight: bold;">{{amount | ellipsis}}</span>
+        </div>
+        <div class="flex flex-v flex-1">
+          <span class="txt-desc" style="font-size: small; padding-bottom: 2vw;">{{$t('lang.blocked')}}</span>
+          <span class="txt-core" style="font-weight: bold;">{{frozen | ellipsis}}</span>
+        </div>
+      </div>
+    </div>
+
+    
+    <div style="margin:3vw 4vw 3vw 4vw">
+      <div class="bg-notice"  @click="toNotice" tapmode>{{$t('lang.notice')}}</div>
+    </div>
+    
+
+    <div style="margin:2vw 4vw 3vw 4vw;">
+      <div class="flex flex-h flex-center-v">
+        <div class="flex-1 flex-left panel-title">{{$t("lang.fastApp")}}</div>
+        <img src="../../image/img/shutdown.png" class="flex-right" style="width:6vw;height:6vw;" @click="toLogout"></img>
+      </div>
+      <div style="height:2vw"></div>
+      <div class="flex flex-v" style="width: 100%;">
+        <div class="flex flex-h">
+          <div class="flex-1 flex flex-v" style="margin-left: 2vw;">
+            <!-- 指南 -->
+            <div class="btn-guide flex flex-v flex-left" @click="toGuide">
+              <span class="btn-title panel-title flex-left">{{$t('lang.guide')}}</span>
+              <span class="btn-desc flex-1 flex-left txt-desc">{{$t('lang.guideDesc')}}</span>
+            </div>
+            <!-- 邀请好友 -->
+            <div class="flex flex-v flex-left" @click="invitation">
+              <span class="btn-title panel-title flex-left">{{$t('lang.InvitationRegister')}}</span>
+            </div>
+
+          </div>
+          <div class="flex-1 flex flex-v" style="margin-left: 2vw;">
+            <!-- 码库 -->
+            <div class="btn-mailbox flex flex-v" style="margin-bottom: 1vw;" @click="toCodeStorage">
+              <span class="btn-title flex-left panel-title">{{$t('lang.codeStorage')}}</span>
+              <span class="btn-desc flex-1 flex-left txt-desc" v-if="nodeName == ''">{{$t('lang.unbind')}}</span>
+              <span class="btn-desc flex-1 flex-left txt-desc" v-if="nodeName != ''"></span>
+              
+            </div>
+            <!-- 密码 -->
+            <div class="btn-lock" style="margin-top: 1vw;" @click="toPassword">
+              <span class="btn-title flex-left panel-title">{{$t('lang.password')}}</span>
+              <span class="btn-desc flex-1 flex-left txt-desc">{{$t('lang.updatePassword')}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-h" style="width: 100%;margin-top: 2vw;">
+            <!-- 语言 -->
+            <div class="flex-1 flex-left flex flex-h btn-lang " tapmode @click="showLanguageAction">
+              <span class="panel-title flex-1 flex-left" style="padding-left: 2vw;">{{$t('lang.currLang')}}</span>
+              <span class="txt-desc flex-right" style="padding-right: 2vw;">{{ language }}</span>
+            </div>
+            <!-- 关于 -->
+            <div class="flex-1 flex-left flex flex-h btn-about" @click="toAbout">
+              <span class="panel-title flex-1 flex-left" style="padding-left: 2vw;">{{$t('lang.about')}}</span>
+              <span class="txt-desc flex-right" style="padding-right: 2vw;">{{ $t('lang.version') }}</span>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div><van-action-sheet v-model="showLang" :actions="arrLang" @select="selLanguage" :cancel-text="$t('lang.cancel')" close-on-click-action /></div>
+    <div><van-action-sheet v-model="showAbout" :actions="arrAbout" @select="selAbout" :cancel-text="$t('lang.cancel')" close-on-click-action /></div>
+    <div><van-action-sheet v-model="showPass" :actions="arrPass" @select="selPass" :cancel-text="$t('lang.cancel')" close-on-click-action /></div>
+    <div><van-action-sheet v-model="showGuide" :actions="arrGuide" @select="selGuide" :cancel-text="$t('lang.cancel')" close-on-click-action /></div>
+  </div>
+</body>
+
+<script>
+  var admob; // 广告
+  var vueObj = {
+    el: '#user',
+    i18n,
+    data() {
+      return {
+        userId: undefined,
+        username: '',
+        avatar: '../../image/icon/icon-user-avatar.png',
+        nodeName: '',
+        walletInfo: null,
+        amount: 0,
+        frozen: 0,
+        showLang: false,
+        language: '简体中文',
+        selLang: 'zh-CN',
+        arrLang: [{ name: '简体中文', val: 'zh-CN' }, { name: '繁體中文', val: 'zh-TW' }, { name: 'English', val: 'en-US' }, { name: '日本', val: 'ja' }, { name: '한국인', val: 'ko' }, { name: 'عربى', val: 'ar' }, { name: 'Melayu', val: 'ms' }, { name: 'Türkçe', val: 'tr' }, { name: 'Tiếng Việt', val: 'vi' }, { name: 'Indonesia', val: 'id' }],
+        notice: '暂无公告',
+        showAbout: false,
+        arrAbout:  [{ name: i18n.t('lang.version'), val: 0 }, { name: i18n.t('lang.userAgreement'), val: 1 }, { name: i18n.t('lang.disclaimer'), val: 2 }],
+        showPass: false,
+        arrPass: [{ name: i18n.t('lang.updatePassword'), val: 0 }, { name: i18n.t('lang.safetyPrinciple'), val: 1 }],
+        showGuide: false,
+        arrGuide: [{ name: i18n.t('lang.helpCenter'), val: 0 }, { name: i18n.t('lang.gameIntro'), val: 1 }, { name: i18n.t('lang.downloadMethod'), val: 2 }, { name: i18n.t('lang.contactus'), val: 3 }],
+      }
+    },
+    created: function () {
+      admob = api.require('admob');
+      var that = this;
+      if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+        var lan = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        if (lan == 'cn') {
+          that.language = '简体中文';
+        } else if (lan == 'tw') {
+          that.language = '繁體中文';
+        } else if (lan == 'en') {
+          that.language = 'English';
+        }else if (lan == 'ja') {
+            that.language = "日本"
+          }else if (lan == 'ko') {
+            that.language = "한국인"
+          }else if (lan == 'ar') {
+            that.language = "عربى"
+          }else if (lan == 'ms') {
+            that.language = "Melayu"
+          }else if (lan == 'tr') {
+            that.language = "Türkçe"
+          }else if (lan == 'vi') {
+            that.language = "Tiếng Việt"
+          }else if (lan == 'id') {
+            that.language = "Indonesia"
+          }
+        that.$i18n.locale = lan;
+      } else {
+        that.language = '简体中文';
+        that.$i18n.locale = 'cn';
+        api.setPrefs({
+          key: KEY_LANGUAGE,
+          value: that.$i18n.locale
+        });
+      }
+      that.arrAbout = [{ name: i18n.t('lang.version'), val: 0 }, { name: i18n.t('lang.userAgreement'), val: 1 }, { name: i18n.t('lang.disclaimer'), val: 2 }];
+      that.arrPass = [{ name: i18n.t('lang.updatePassword'), val: 0 }, { name: i18n.t('lang.safetyPrinciple'), val: 1 }];
+      that.arrGuide = [{ name: i18n.t('lang.helpCenter'), val: 0 }, { name: i18n.t('lang.gameIntro'), val: 1 }, { name: i18n.t('lang.downloadMethod'), val: 2 }, { name: i18n.t('lang.contactus'), val: 3 }];
+      
+      api.addEventListener({
+        name: 'refreshUserPage'
+      }, function (ret, err) {
+        that.refresh();
+        that.arrAbout = [{ name: i18n.t('lang.version'), val: 0 }, { name: i18n.t('lang.userAgreement'), val: 1 }, { name: i18n.t('lang.disclaimer'), val: 2 }];
+        that.arrPass = [{ name: i18n.t('lang.updatePassword'), val: 0 }, { name: i18n.t('lang.safetyPrinciple'), val: 1 }];
+        that.arrGuide = [{ name: i18n.t('lang.helpCenter'), val: 0 }, { name: i18n.t('lang.gameIntro'), val: 1 }, { name: i18n.t('lang.downloadMethod'), val: 2 }, { name: i18n.t('lang.contactus'), val: 3 }];
+      });
+      api.setRefreshHeaderInfo({
+        // loadingImg: 'widget://image/refresh.png',
+        bgColor: '#ccc',
+        textColor: '#fff',
+        textDown: i18n.t('lang.pullRefresh') + '...',
+        textUp: i18n.t('lang.releaseRefresh') + '...',
+      }, function (ret, err) {
+        api.refreshHeaderLoadDone();
+        that.refresh();
+      });
+    },
+    filters: {
+      ellipsis(data) {
+        if (data != null) {
+          return formatDecimals(data)
+        } else {
+          return data;
+        }
+      }
+    },
+    mounted () {
+      this.refresh();
+    },
+    methods: {
+      refresh() {
+        var that = this;
+        POST(getUserInfo(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN })
+        }, function (ret, err) {
+          that.username = ret.data.name;
+          that.userId = ret.data.id;
+          if(ret.data.header) {
+            that.avatar = ret.data.header;
+          }
+          if (ret.data.codeLibrary) {
+            that.nodeName = ret.data.codeLibrary.nodeName;
+          } else {
+            that.nodeName = ""
+          }
+        });
+        POST(getNoticeList(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+          page: 1,
+          limit: 1,
+          sort: '-updated_at',
+          language: "zh-CN"
+        }, function (ret, err) {
+          if (ret.data.items.length == 0) {
+              that.notice = "";
+            } else {
+              that.notice = ret.data.items[0].title;
+            }
+        });
+        POST(getWalletAccount(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+          walletType: 0 // A户
+        }, function (ret, err) {
+          that.walletInfo = ret.data[0];
+          that.amount = ret.data[0].total;
+        });
+        POST(getWalletAccount(), {
+          token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+          walletType: 1 // B户
+        }, function (ret, err) {
+          that.frozen = ret.data[0].total;
+        });
+      },
+      showLanguageAction() {
+        this.showLang = true;
+      },
+      selLanguage(item) {
+        this.showLang = false;
+        this.language = item.name;
+        this.selLang = item.val;
+        if (item.val == 'zh-CN') {
+          this.$i18n.locale = 'cn';
+        } else if (item.val == 'zh-TW') {
+          this.$i18n.locale = 'tw';
+        } else if (item.val == 'en-US') {
+          this.$i18n.locale = 'en';
+        } else if (item.val == 'ja') {
+          this.$i18n.locale = 'ja';
+        } else if (item.val == 'ko') {
+          this.$i18n.locale = 'ko';
+        } else if (item.val == 'ar') {
+          this.$i18n.locale = 'ar';
+        } else if (item.val == 'ms') {
+          this.$i18n.locale = 'ms';
+        } else if (item.val == 'tr') {
+          this.$i18n.locale = 'tr';
+        } else if (item.val == 'vi') {
+          this.$i18n.locale = 'vi';
+        } else if (item.val == 'id') {
+          this.$i18n.locale = 'id';
+        }
+        this.arrAbout = [{ name: i18n.t('lang.version'), val: 0 }, { name: i18n.t('lang.userAgreement'), val: 1 }, { name: i18n.t('lang.disclaimer'), val: 2 }];
+        this.arrPass = [{ name: i18n.t('lang.updatePassword'), val: 0 }, { name: i18n.t('lang.safetyPrinciple'), val: 1 }];
+        this.arrGuide = [{ name: i18n.t('lang.helpCenter'), val: 0 }, { name: i18n.t('lang.gameIntro'), val: 1 }, { name: i18n.t('lang.downloadMethod'), val: 2 }, { name: i18n.t('lang.contactus'), val: 3 }];
+        
+        api.setPrefs({
+          key: KEY_LANGUAGE,
+          value: this.$i18n.locale
+        });
+        var jsfun = 'setLanguage();';
+        api.execScript({
+          frameName: 'home',
+          script: jsfun
+        });
+        api.execScript({
+          frameName: 'game',
+          script: jsfun
+        });
+        api.execScript({
+          frameName: 'wallet',
+          script: jsfun
+        });
+      },
+      initInterstitial() {
+        var that = this;
+       var adUnitID = 'ca-app-pub-5743539110723541/9562770182'; 
+        //var adUnitID = 'ca-app-pub-3940256099942544/1033173712'; // test
+
+        admob.initInterstitial({
+          adUnitID: adUnitID
+        }, function (ret, err) {
+          that.startInterstitial();
+        });
+      },
+      startInterstitial() {
+        var that = this;
+        admob.startInterstitial(function (ret, err) {
+          setTimeout(function () {
+            api.openWin({
+              name: 'ranking',
+              url: '../main_home/ranking.html',
+              pageParam: {
+                guessId: api.getPrefs({ sync: true, key: KEY_GUESS_ID })
+              }
+            });
+          }, 100);
+        });
+      },
+      toInfo() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'info',
+          url: './info.html',
+          pageParam: {
+            avatar: this.avatar
+          }
+        });
+      },
+      toNotice() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'notice',
+          url: './notice.html',
+          pageParam: {
+            guessId: api.getPrefs({ sync: true, key: KEY_GUESS_ID })
+          }
+        });
+      },
+      toRanking() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+            name: 'web',
+            url: '../common/web.html',
+            pageParam: {
+                title: "ADS",
+                link: URL_ADS,
+                guessId: api.getPrefs({ sync: true, key: KEY_GUESS_ID })
+            }
+        });
+        // api.openWin({
+        //   name: 'web',
+        //   url: '../common/web.html',
+        //   pageParam: {
+        //     title: "ADS",
+        //     link: URL_ADS,
+        //   }
+        // });
+        // this.initInterstitial();
+      },
+      toGuess() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'guess',
+          url: '../main_home/guess.html',
+          pageParam: {
+            guessId: api.getPrefs({ sync: true, key: KEY_GUESS_ID })
+          }
+        });
+      },
+      toTopup() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'topup',
+          url: '../main_wallet/topup.html',
+        });
+      },
+      toRecord() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'record',
+          url: '../main_wallet/record.html',
+        });
+      },
+      toMission() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'mission',
+          url: '../main_user/checkin.html',
+        });
+      },
+      toGuide() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        this.showGuide = true
+      },
+      selGuide(item) {
+        switch (item.val) {
+          case 0:
+            api.openWin({
+              name: 'web',
+              url: '../common/web.html',
+              pageParam: {
+                title: item.name,
+                link: URL_HELPER
+              }
+            });
+            break;
+          case 1:
+            api.openWin({
+              name: 'web',
+              url: '../common/web.html',
+              pageParam: {
+                title: item.name,
+                link: URL_GUIDE
+              }
+            });
+            break;
+          case 2:
+            api.openWin({
+              name: 'web',
+              url: '../common/web.html',
+              pageParam: {
+                title: item.name,
+                link: URL_DOWNLOAD
+              }
+            });
+            break;
+          case 3:
+            api.openWin({
+              name: 'web',
+              url: '../common/web.html',
+              pageParam: {
+                title: item.name,
+                link: URL_CONTACT
+              }
+            });
+            break;
+        }
+      },
+      toPassword() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        this.showPass = true;
+      },
+      selPass(item) {
+        switch (item.val) {
+          case 0:
+            api.openWin({
+              name: 'updatePassword',
+              url: '../login/update_password.html',
+              pageParam: {
+                token: api.getPrefs({ sync: true, key: KEY_TOKEN }),
+                showOldPassword: true
+              }
+            })
+            break;
+          case 1:
+            api.openWin({
+              name: 'web',
+              url: '../common/web.html',
+              pageParam: {
+                title: item.name,
+                link: URL_SAFETY
+              }
+            });
+            break;
+        }
+      },
+      toAbout() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        this.showAbout = true
+      },
+      selAbout(item) {
+        switch (item.val) {
+          case 0:
+            api.openWin({
+              name: 'web',
+              url: '../common/web.html',
+              pageParam: {
+                title: i18n.t('lang.about'),
+                link: URL_ABOUT
+              }
+            });
+            break;
+          case 1:
+            api.openWin({
+              name: 'web',
+              url: '../common/web.html',
+              pageParam: {
+                title: item.name,
+                link: URL_PROTOCOL
+              }
+            });
+            break;
+          case 2:
+            api.openWin({
+              name: 'web',
+              url: '../common/web.html',
+              pageParam: {
+                title: item.name,
+                link: URL_DECLARE
+              }
+            });
+            break;
+        }
+      },
+      toCodeStorage() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        if (this.nodeName == '') {
+          api.openWin({
+            name: 'codeStorage',
+            url: './code_storage.html',
+          });
+        } else {
+          var that = this;
+          alertDouble(i18n.t("lang.confirmUnbind"), function () {
+            POST(getCodeLibraryUnlock(), {
+              token: api.getPrefs({ sync: true, key: KEY_TOKEN })
+            }, function (ret, err) {
+              that.refresh();
+            });
+          });
+        }
+      },
+      toLogout() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        alertDouble(i18n.t("lang.confirmLogout"), function() {
+          api.removePrefs({ key: KEY_TOKEN })
+          api.openWin({
+            name: 'login',
+            url: '../login/login.html',
+          })
+        });
+        
+      },     
+      invitation() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'invitationregister',
+          url: './invitationregister.html',
+          pageParam: {
+            userId: this.userId
+          }
+        });
+      },
+    },
+  };
+  refreshUserInfo = function () {
+    var json = api.getPrefs({ sync: true, key: KEY_WALLET_INFO });
+    if (json) {
+      var wi = JSON.parse(json);
+      window.appUser.$data.amount = wi.total;
+    }
+  };
+  apiready = function () {
+    window.appUser = new Vue(vueObj);
+  }
+</script>
+
+</html>
