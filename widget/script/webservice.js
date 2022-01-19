@@ -14,7 +14,7 @@
     window.KEY_MSG_TOKEN = '859f8236e46616d80381c8d1e51c71fd';
     window.KEY_MSG_APPID = '1dcb0de4f0914a29be9b4101bbb410c6';
     window.KEY_MSG_TID = 39178;
-    
+
     /**
      * Keys for API verification
      */
@@ -49,10 +49,10 @@
 
 
     // region API functions
-     //window.BASE_URL = 'http://192.168.10.70:8099/'; //测试服
+    window.BASE_URL = 'http://192.168.10.70:8099/'; //测试服
     // window.BASE_URL = 'http://192.168.0.120:8099/'; //测试服
-    window.BASE_URL = 'https://api.fes5.net/'; //测试服
-    
+    //window.BASE_URL = 'https://api.fes5.net/'; //测试服
+
     window.URL_HELPER = 'https://five-elements.io/%e9%bb%84%e9%87%91/'; // 帮助中心
     window.URL_GUIDE = 'https://five-elements.io/rules/'; // 游戏介绍
     window.URL_DOWNLOAD = 'https://five-elements.io/%e4%b8%8b%e8%bd%bd%e4%b8%ad%e5%bf%83/'; // 下载方式
@@ -62,8 +62,8 @@
     window.URL_SAFETY = 'https://five-elements.io/'; // 安全原则
     window.URL_ADS = 'https://fes-dapp.oss-ap-southeast-1.aliyuncs.com/ads.png'; // 广告图片链接
     window.URL_CONTACT = 'https://five-elements.io/contacts/'; // 广告图片链接
-    
-    
+
+
     var FUN_REGISTER = 'user/register'; //注册
     var FUN_LOGIN = 'user/login'; // 登录
     var FUN_FORGOT_PASSWORD = 'user/forgotPassword'; //忘记密码
@@ -97,124 +97,136 @@
     var FUN_GAME_HISTORY = 'guess/gameHistory'; //游戏记录
     var FUN_GAME_RESULT = 'guess/gameResult'; //游戏结果
     var INVITATION_CODE = 'inviteCode/getMyCode'; //获取邀请码
-    
-    
-    
-    getWalletLogByDate = function () {
+    var GENERATE_AWARD = 'lottery/generateAward'; //抽奖
+    var LOTTERY_COUNT = 'lottery/lotteryCount'; //抽奖次数
+    var INIT_DRAW_LIS = 'lottery/initDrawList'; //获取奖品列表
+
+
+
+    getWalletLogByDate = function() {
         return BASE_URL + FUN_WALLET_LOG_BY_DATE
     }
-    getGameHistory = function () {
+    getGameHistory = function() {
         return BASE_URL + FUN_GAME_HISTORY
     }
-    getGameResult = function () {
+    getGameResult = function() {
         return BASE_URL + FUN_GAME_RESULT
     }
-    getRegister = function () {
+    getRegister = function() {
         return BASE_URL + FUN_REGISTER
     }
-    getUpload = function () {
+    getUpload = function() {
         return BASE_URL + FUN_UPLOAD
     }
     getUpdateInfo = function() {
         return BASE_URL + FUN_UPDATE_INFO
     }
-    getLogin = function () {
+    getLogin = function() {
 
         return BASE_URL + FUN_LOGIN;
     }
-    getCurrentRound = function () {
+    getCurrentRound = function() {
         return BASE_URL + FUN_CURRENT_ROUND;
     }
-    getForgotPassword = function () {
+    getForgotPassword = function() {
         return BASE_URL + FUN_FORGOT_PASSWORD;
     }
-    getUpdatePassword = function () {
+    getUpdatePassword = function() {
         return BASE_URL + FUN_UPDATE_PASSWORD;
     }
-    getWalletAccount = function () {
+    getWalletAccount = function() {
         return BASE_URL + FUN_WALLET_ACCOUNT;
     }
-    getJoinGuess = function () {
+    getJoinGuess = function() {
         return BASE_URL + FUN_JOIN_GUESS;
     }
-    getRanking = function () {
+    getRanking = function() {
         return BASE_URL + FUN_RANKING;
     }
-    getAverageRanking = function () {
+    getAverageRanking = function() {
         return BASE_URL + FUN_AVERAGE_RANKING;
     }
-    getGuessList = function () {
+    getGuessList = function() {
         return BASE_URL + FUN_GUESS_LIST;
     }
-    getAddressList = function () {
+    getAddressList = function() {
         return BASE_URL + FUN_WITHDRAW_ADDRESS;
     }
-    getCreateAddress = function () {
+    getCreateAddress = function() {
         return BASE_URL + FUN_CREATE_ADDRESS;
     }
-    getCoinType = function () {
+    getCoinType = function() {
         return BASE_URL + FUN_COIN_TYPE;
     }
-    getUnlock =  function () {
+    getUnlock = function() {
         return BASE_URL + FUN_UNLOCK_ACCOUNTB;
     }
-    getWithdrawal = function () {
+    getWithdrawal = function() {
         return BASE_URL + FUN_WITHDRAWAL;
     }
-    getTradeList = function () {
+    getTradeList = function() {
         return BASE_URL + FUN_TRADE_LIST;
     }
-    getRechageAddress = function () {
+    getRechageAddress = function() {
         return BASE_URL + FUN_RECHARE_ADDRESS;
     }
-    getWalletLog = function () {
+    getWalletLog = function() {
         return BASE_URL + FUN_WALLET_LOG;
     }
-    getSendLoginCode = function () {
+    getSendLoginCode = function() {
         return BASE_URL + FUN_SEND_LOGIN_CODE;
     }
-    getCodeLibraryLogin = function () {
+    getCodeLibraryLogin = function() {
         return BASE_URL + FUN_CODE_LIBRARY_LOGIN;
     }
-    getCodeLibraryUnlock = function () {
+    getCodeLibraryUnlock = function() {
         return BASE_URL + FUN_CODE_LIBRARY_UNLOCK;
     }
-    getSysArgs = function () {
+    getSysArgs = function() {
         return BASE_URL + FUN_SYS_ARGS;
     }
-    getUserInfo = function () {
+    getUserInfo = function() {
         return BASE_URL + FUN_INFO;
     }
-    getSendCode = function () {
+    getSendCode = function() {
         return BASE_URL + FUN_SEND_CODE;
     }
-    getNoticeList = function () {
+    getNoticeList = function() {
         return BASE_URL + FUN_NOTICE_LIST;
     }
-    getReplayGuessCheck = function () {
+    getReplayGuessCheck = function() {
         return BASE_URL + FUN_REPLAY_GUESS_CHECK;
     }
-    getAddressIsInternal = function () {
+    getAddressIsInternal = function() {
         return BASE_URL + FUN_ADDRESS_IS_INTERNAL;
     }
-    getAddressIsInternal = function () {
+    getAddressIsInternal = function() {
         return BASE_URL + FUN_ADDRESS_IS_INTERNAL;
     }
-    getInvitationCode = function(){
+    getInvitationCode = function() {
         return BASE_URL + INVITATION_CODE;
     }
-    
+    generateAward = function() {
+        return BASE_URL + GENERATE_AWARD;
+    }
+    lotteryCount = function() {
+        return BASE_URL + LOTTERY_COUNT;
+    }
+    initDrawLis = function() {
+        return BASE_URL + INIT_DRAW_LIS;
+    }
+
 
     // endregion
     /******************************************************
      ***************** Common functions *******************
      ******************************************************/
 
-    getToken = function (timestamp) {
+    getToken = function(timestamp) {
         return $.md5(VAL_ACCESS_CODE + timestamp);
     }
 
-    POST = function (url, data, callback, failcallback = function (err) { log(err); }) {
+    POST = function(url, data, callback, failcallback = function(err) { log(err); }) {
         log(url);
         log(data);
         // api.showProgress({
@@ -223,7 +235,7 @@
         // });
         var timestamp = new Date().getTime();
         var token = getToken(timestamp);
-        var language = api.getPrefs({sync: true, key: KEY_LANGUAGE });
+        var language = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
         api.ajax({
             url: url,
             method: 'post',
@@ -237,7 +249,7 @@
             data: {
                 body: data
             }
-        }, function (ret, err) {
+        }, function(ret, err) {
             log(ret);
             // api.hideProgress();
             if (err) {
@@ -264,17 +276,23 @@
         });
     }
 
-    filterLanguage = function (language) {
+    filterLanguage = function(language) {
         var rt = 'zh-CN';
-        if (language == 'tw') {
-            rt = 'zh-TW';
-        } else if (language == 'en') {
-            rt = 'en-US';
+        switch (language) {
+            case 'tw':
+                rt = 'zh-TW';
+                break
+            case 'en':
+                rt = 'en-US';
+                break
+            default:
+                rt = language
+                break
         }
         return rt;
     }
 
-    GET = function (url, data, callback) {
+    GET = function(url, data, callback) {
         // log(url);
         // log(data);
         api.ajax({
@@ -282,14 +300,14 @@
             method: 'get',
             dataType: "json",
             headers: {
-                'language': filterLanguage(api.getPrefs({sync: true, key: KEY_LANGUAGE }))
+                'language': filterLanguage(api.getPrefs({ sync: true, key: KEY_LANGUAGE }))
             },
-        }, function (ret, err) {
+        }, function(ret, err) {
             // log(ret);
             // log(err);
             if (ret && (ret.code == KEY_STATUS_TIMEOUT || ret.code == KEY_STATUS_FROZEN)) {
                 // api.hideProgress();
-                alertSingle(ret.errorMsg, function (ret) {
+                alertSingle(ret.errorMsg, function(ret) {
 
                 });
             } else {
@@ -312,48 +330,48 @@
     alertDouble = function(msg, callback) {
         var dialogBox = api.require('dialogBox');
         dialogBox.alert({
-                texts: {
-                    title: i18n.t('lang.alert'),
-                    content: msg,
-                    leftBtnTitle: i18n.t('lang.cancel'),
-                    rightBtnTitle: i18n.t('lang.confirm')
-                },
-                styles: {
-                    bg: '#202633',
-                    corner: 5,
-                    title: {
-                        marginT: 20,
-                        icon: 'widget://image/icon-notice1.png',
-                        iconSize: 40,
-                        titleColor: '#fff'
-                    },
-                    content: {
-                        color: '#fff',
-                        size: 14
-                    },
-                    left: {
-                        marginB: 7,
-                        marginL: 15,
-                        color: '#a0732a',
-                        corner: 2,
-                        bg: '#fff',
-                        size: 15,
-                        w: 130,
-                        h: 35,
-                        border: 'solid 1px #a0732a',
-                    },
-                    right: {
-                        marginB: 7,
-                        marginL: 10,
-                        corner: 2,
-                        color: '#fff',
-                        bg: '#a0732a',
-                        size: 15,
-                        w: 130,
-                        h: 35,
-                    }
-                }
+            texts: {
+                title: i18n.t('lang.alert'),
+                content: msg,
+                leftBtnTitle: i18n.t('lang.cancel'),
+                rightBtnTitle: i18n.t('lang.confirm')
             },
+            styles: {
+                bg: '#202633',
+                corner: 5,
+                title: {
+                    marginT: 20,
+                    icon: 'widget://image/icon-notice1.png',
+                    iconSize: 40,
+                    titleColor: '#fff'
+                },
+                content: {
+                    color: '#fff',
+                    size: 14
+                },
+                left: {
+                    marginB: 7,
+                    marginL: 15,
+                    color: '#a0732a',
+                    corner: 2,
+                    bg: '#fff',
+                    size: 15,
+                    w: 130,
+                    h: 35,
+                    border: 'solid 1px #a0732a',
+                },
+                right: {
+                    marginB: 7,
+                    marginL: 10,
+                    corner: 2,
+                    color: '#fff',
+                    bg: '#a0732a',
+                    size: 15,
+                    w: 130,
+                    h: 35,
+                }
+            }
+        },
             function(ret) {
                 dialogBox.close({
                     dialogName: 'alert'
@@ -410,7 +428,7 @@
     getGlobalConfigs = function(callback) {
         var config = $api.getStorage(KEY_GLOBAL_CONFIG);
         if (config == null) {
-          api.showProgress();
+            api.showProgress();
             sendPostRequest(getApiGetGlobalConfigs(), {}, function(ret, err) {
                 api.hideProgress();
                 // log(ret);
@@ -440,7 +458,7 @@
                 androidPkg: 'android.intent.action.VIEW',
                 mimeType: 'text/html',
                 uri: aimurl
-            }, function (ret2, err2) {
+            }, function(ret2, err2) {
                 if (ret2) {
 
                 } else {
@@ -450,7 +468,7 @@
         } else {
             api.openApp({
                 iosUrl: aimurl,
-            }, function (ret2, err2) {
+            }, function(ret2, err2) {
                 if (ret2) {
 
                 } else {
@@ -468,7 +486,7 @@
 
 
     //去尾法
-    Number.prototype.toFloor = function (num) {
+    Number.prototype.toFloor = function(num) {
         return Math.floor(this * Math.pow(10, num)) / Math.pow(10, num);
     };
 
@@ -477,7 +495,7 @@
      * @param number
      * @param decimals
      */
-    formatDecimals = function (number, decimals = 2) {
+    formatDecimals = function(number, decimals = 2) {
         var num = new Number(number);
         return num.toFixed(decimals);
     }
@@ -531,10 +549,10 @@
         }, function(ret) {
             if (ret.eventType == 'right') {
                 callback(ret.text)
-                    // var dialogBox = api.require('dialogBox');
-                    // dialogBox.close({
-                    //     dialogName: 'input'
-                    // });
+                // var dialogBox = api.require('dialogBox');
+                // dialogBox.close({
+                //     dialogName: 'input'
+                // });
             } else if (ret.eventType == 'left') {
                 var dialogBox = api.require('dialogBox');
                 dialogBox.close({
@@ -605,12 +623,12 @@
             }
         }
     })
-    
+
     /**
      * 获取用户信息
      * @returns {boolean|any}
      */
-    getUser = function () {
+    getUser = function() {
         let user = api.getPrefs({
             sync: true,
             key: KEY_LOGIN_USER
@@ -623,7 +641,7 @@
 
     getElementStr = function(category) {
         var str = i18n.t('lang.gold')
-        switch(category) {
+        switch (category) {
             case 0:
                 str = i18n.t('lang.gold')
                 break;

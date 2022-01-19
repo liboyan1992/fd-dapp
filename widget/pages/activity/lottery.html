@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>{{$t("lang.lotteryTitle")}}</title>
+  <script src="../../script/vue.min.js"></script>
+  <script src="../../script/vue-i18n.min.js"></script>
+  <script src="../../script/vant.min.js"></script>
+  <script src="../../script/country-code.js"></script>
+
+  <script src="../../i18n/zh-cn.js"></script>
+  <script src="../../i18n/zh-tw.js"></script>
+  <script src="../../i18n/en.js"></script>
+  <script src="../../i18n/ja.js"></script>
+  <script src="../../i18n/ko.js"></script>
+  <script src="../../i18n/ar.js"></script>
+  <script src="../../i18n/ms.js"></script>
+  <script src="../../i18n/tr.js"></script>
+  <script src="../../i18n/vi.js"></script>
+  <script src="../../i18n/id.js"></script>
+  <script src="../../script/jquery.min.js"></script>
+  <script src="../../script/jquery.md5.js"></script>
+  <script src="../../script/api.js"></script>
+  <script src="../../script/webservice.js"></script>
+  <script src="../../script/lottery.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../../css/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/app.css" />
+  <style>
+    html,
+    body {
+      overflow-x: hidden;
+      background: url(../../image/img/lottery_bg.png)no-repeat;
+      width: 100%;
+      height: 100%;
+      background-size: 100% 100%;
+      position: absolute;
+    }
+
+    .lottery_topbar {
+      padding-top: 8vw;
+      padding-bottom: 4vw;
+      width: 100%;
+      height: 12vw;
+      background-size: cover;
+      align-items: center;
+      -webkit-align-items: center;
+      text-align: center;
+      -webkit-text-align: center;
+      font-size: 22px;
+      color: #ffffff;
+    }
+
+    .notice {
+         width: 100%;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      margin: 10px auto;
+      overflow: hidden;
+    }
+
+    .notice__inner {
+      animation: roll 36s linear infinite;
+      margin-top: 0
+    }
+
+    .notice__item {
+      font-size: 14px;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 12px;
+      white-space: nowrap;
+      text-decoration: underline;
+    }
+
+    @keyframes roll {
+      0% {
+        margin-top: 0;
+      }
+
+      4% {
+        margin-top: 0;
+      }
+
+      8% {
+        margin-top: 0;
+      }
+
+      12% {
+        margin-top: -40px;
+      }
+
+      16% {
+        margin-top: -40px;
+      }
+
+      20% {
+        margin-top: -80px;
+      }
+
+      24% {
+        margin-top: -80px;
+      }
+
+      28% {
+        margin-top: -120px;
+      }
+
+      32% {
+        margin-top: -120px;
+      }
+
+      36% {
+        margin-top: -160px;
+      }
+
+      40% {
+        margin-top: -160px;
+      }
+
+      44% {
+        margin-top: -200px;
+      }
+
+      48% {
+        margin-top: -200px;
+      }
+
+      52% {
+        margin-top: -240px;
+      }
+
+      56% {
+        margin-top: -240px;
+      }
+
+      60% {
+        margin-top: -200px;
+      }
+
+      64% {
+        margin-top: -200px;
+      }
+
+      68% {
+        margin-top: -160px;
+      }
+
+      72% {
+        margin-top: -160px;
+      }
+
+      76% {
+        margin-top: -120px;
+      }
+
+      80% {
+        margin-top: -120px;
+      }
+
+      84% {
+        margin-top: -80px;
+      }
+
+      88% {
+        margin-top: -80px;
+      }
+
+      92% {
+        margin-top: -40px;
+      }
+
+      96% {
+        margin-top: -40px;
+      }
+
+      100% {
+        margin-top: 0;
+      }
+    }
+
+    .lottery_number {
+      width: 200px;
+      height: 36px;
+      line-height: 36px;
+      margin-top: 20px;
+      margin-bottom: 120px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #fff;
+      text-align: center;
+      background-color: #f2004c;
+    }
+
+    #lottery-wrap {
+      position: relative;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 300px;
+      border: 8px solid #eac34c;
+      border-radius: 50%;
+      box-shadow: 3px 0 3px #fffdc9, 0px 3px 3px #fffdc9, -3px 0 3px #fffdc9, 0px -3px 3px #fffdc9;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    #lottery-handler {
+      position: absolute;
+      z-index: 2;
+      width: 60px;
+      height: 74px;
+      left: 50%;
+      top: 50%;
+      margin: -44px 0 0 -30px;
+      background: url(../../image/img/handler2.png) no-repeat 50%;
+      background-size: contain;
+    }
+
+    .invitation_title {
+      font-weight: bold;
+      font-size: 18px;
+      margin: 40px 0;
+      padding: 0 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="lottery_topbar flex flex-h flex-center-v">
+    <img class="btn-back" src="../../image/img/arrow-left.png" @click="cancel"></img>
+    <span class="flex-1 flex-center">{{$t("lang.lotteryTitle")}}</span>
+  </div>
+  <div class="notice flex flex-h flex-center-v">
+    <div class="notice__inner">
+      <div class="notice__item">HTTP升级HTTPS全过程，Nginx配置平滑升级</div>
+      <div class="notice__item">一台电脑存在多个版本的Vuecli，方便快速初始化不同版本的Vue项目</div>
+      <div class="notice__item">前端模块化规范定义-不同规范下的导入导出</div>
+      <div class="notice__item">快速、简洁讲明Vue中v-for循环key的作用</div>
+      <div class="notice__item">Call与Apply函数的分析及手写实现</div>
+      <div class="notice__item">普通切图仔的一年 | 掘金年度征文</div>
+      <div class="notice__item">前端需要了解的浏览器缓存（即HTTP缓存）| 🏆 技术专题第八期征文</div>
+    </div>
+  </div>
+  <div class="lottery_number">
+    你还有{{lotteryCount}}次抽奖机会
+  </div>
+  <div id="lottery-wrap">
+    <div id="lottery-handler"></div>
+    <canvas width="300" height="300" id="lottery"></canvas>
+  </div>
+  <div class="invitation_title">
+    <h3>如何参与：</h3>
+    1.在APP内7天有效竞投累计数额超过1000FEC <br>
+    2.报名培训的用户，必须连续7天参与竞投，每天至少竞投1FEC <br>
+    3.每个账户满足以上任意条件即可获得一次抽奖资格，仅限参与一次<br>
+    4.线上线下已中过奖的用户将无法重复参与<br><br>
+
+
+    <h3> 活动时间：</h3>
+    即日起至2022年2月28日24点 GMT+8<br><br>
+
+    <h3>奖励设置：</h3>
+    一等奖: 15,888 FEC<br>
+    二等奖: 8,888 FEC<br>
+    三等奖: 2,888 FEC<br>
+    四等奖: 588 FEC <br>
+    五等奖: 188 FEC<br>
+    六等奖: 88 FEC <br><br>
+
+    欲了解更多精彩活动，欢迎加入FES电报群。<br>
+    FEC亚太共识群：<a href="https://t.me/+l3mdJzsapLRkNGE1">https://t.me/+l3mdJzsapLRkNGE1</a><br>
+    FES官方频道：<a href="https://t.me/FiveElementSystemChannelCN">https://t.me/FiveElementSystemChannelCN</a> <br>
+    点击上方蓝色链接“加入”, 并点击“开启通知”即可<br><br>
+
+    *活动最终解释权归FES所有<br><br>
+  </div>
+</body>
+
+<script>
+  var vueObj = {
+    el: '#game',
+    i18n,
+    data() {
+      return {
+        lotteryCount: 0,
+        products: []
+      };
+    },
+    filters: {
+      email: function(value) {
+        if (value && value.length > 6) {
+          let str = value.split("@");
+          return str[0].substr(0, str[0].length - 2) + "*****" + str[1].substr(2);
+        } else {
+          return value
+        }
+      },
+      name: function(value) {
+        if (value && value.length > 2) {
+          return "*" + value.substring(value.length - 2);
+        } else {
+          return value
+        }
+      },
+    },
+
+    created() {
+      POST(lotteryCount(), { token: api.getPrefs({ sync: true, key: KEY_TOKEN }), }, (ret, err) => {
+        this.lotteryCount = ret.data;
+      });
+
+    },
+    methods: {
+      lotterydialogBox(amount) {
+        var dialogBox = api.require('dialogBox');
+        dialogBox.taskPlan({
+          rect: {
+            w: 300,
+          },
+          texts: {
+            content: [{
+              text: `恭喜您获得${amount}FEC`
+            }],
+            btnTitle: '立即领取'
+          },
+          styles: {
+            bg: '../../image/img/dialogBox_lottery2.png',
+            content: [{
+              bg: 'rgba(254,254,254,0.5)',
+              marginT: 220,
+              marginL: 60,
+              w: 180,
+              align: 'center',
+              color: '#fff',
+              size: 12
+            }],
+            ok: {
+              marginT: 20,
+              marginB: 40,
+              marginL: 108,
+              w: 80,
+              h: 36,
+              bg: '#eac34c',
+              color: '#fff',
+              size: 12
+            }
+          }
+        }, function(ret) {
+          if (ret.eventType == 'ok') {
+            var dialogBox = api.require('dialogBox');
+            dialogBox.close({
+              dialogName: 'taskPlan'
+            });
+          }
+        });
+
+
+      },
+
+      cancel() {
+        api.closeWin();
+      },
+      /*模拟ajax请求数据返回*/
+      _ajax(callback) {
+        /*jQuery.ajax({
+          url: url,
+          data: data,
+          success: function(response){
+            callback && callback(response);
+          }
+        })*/
+        setTimeout(() => {
+          var _index = Math.floor(Math.random() * this.products.length);
+          var response = { id: 1, name: this.products[_index].name, index: _index };
+          callback && callback(response);
+        }, 100);
+      }
+    },
+    mounted() {
+      POST(initDrawLis(), { token: api.getPrefs({ sync: true, key: KEY_TOKEN }), }, (ret, err) => {
+        const initDrawLis = ret.data;
+
+        initDrawLis.forEach(element => {
+          this.products.push({
+            "imgUrl": "../../image/img/redpacket.png",
+            "name": element.prize + 'FES',
+            "id": element.id,
+            "prize": element.prize,
+          })
+        });
+        new Lottery(document.getElementById('lottery'), {
+          handler: document.getElementById('lottery-handler'),
+          handlerCallback: (_interface) => {
+            // if(this.lotteryCount < 1){
+            //     alertSingle('你的抽奖机会已用完！');
+            //     return false;
+            // }
+            /*ajax获取中奖结果*/
+            this._ajax((response) => {
+
+              /*指定停止的位置:索引*/
+              _interface.stop(response.index, () => {
+                const product = this.products[response.index]
+                this.lotterydialogBox(product.prize)
+              });
+            });
+          },
+          images: {
+            width: 22,
+            height: 29,
+            y: '88%',
+          },
+          products: this.products
+        });
+
+
+      });
+    },
+  };
+  setLanguage = function() {
+    if (api.getPrefs({ sync: true, key: KEY_LANGUAGE })) {
+      i18n.locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+    }
+  }
+  apiready = function() {
+    window.appInfo = new Vue(vueObj);
+    setLanguage();
+  }
+</script>
+
+</html>

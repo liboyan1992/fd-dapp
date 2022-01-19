@@ -137,6 +137,10 @@ window.TR = {
 	"statusGuessFrozen": "Bloke Tutarı",
 	"statusGuessProfit": "Oyundan Edinilen Kar",
 	"statusGuessAward": "Oyun Ödülü Tutarı",
+	"statusNewcomerReward":"Yeni Gelen Ödülü",
+	"statusReferralNewcomerReward":"Referans Yeni Gelen Ödülü",
+	"statusRaffleBonus":"çekiliş bonusu",
+	"lotteryTitle":"Milyon FEC Şanslı Çekiliş", 
 	"note": "Not",
 	"note1": "Bu adres yalnızca FEC kabul eder",
 	"note2": "Bu adrese yatırılan diğer varlıklar geri alınamaz",
@@ -173,4 +177,9 @@ window.TR = {
 	"waitingFor": "Bizi takip etmeye devam edin",
 	"loading": "Yükleniyor",
 	"pleaseWait": "Lütfen bekleyin...",
+	"invitationRulesTitle":"Davetiye ödül kuralları",
+	"invitationRulesContent1":"Arkadaş kayıt olmak için davet kodunu girdikten sonra, yeni kayıt olan kullanıcı 3FEC deneyim bonusunu alabilir.",
+	"invitationRulesContent2":"Yeni kayıtlı kullanıcılar art arda 5 gün boyunca her gün en az 1FEC teklif verir ve yönlendiren 2FEC ödülü alabilir.",
+	"invitationRulesContent3":"Ödüllendirilen FEC, yalnızca ihaleye katılabilir ve geri alınamaz. ",
+
 }
