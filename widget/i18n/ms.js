@@ -180,5 +180,5 @@ window.MS = {
 	"invitationRulesTitle":"Peraturan ganjaran jemputan",
 	"invitationRulesContent1":"Selepas rakan memasukkan kod jemputan untuk mendaftar, pengguna yang baru mendaftar boleh mendapat bonus pengalaman 3FEC.",
 	"invitationRulesContent2":"Pengguna berdaftar baharu membida sekurang-kurangnya 1FEC setiap hari selama 5 hari berturut-turut, dan perujuk boleh mendapat ganjaran 2FEC.",
-	"invitationRulesContent3":"FEC yang diberi ganjaran hanya boleh mengambil bahagian dalam bidaan dan tidak boleh ditarik balik. ",	
+	"invitationRulesContent3":"FEC yang diberi ganjaran hanya boleh mengambil bahagian dalam bidaan dan tidak boleh ditarik balik.Tempoh acara adalah dari 8 Januari 2022 hingga 8 Februari 2022. Hak tafsiran akhir acara tersebut adalah milik FES.",	
 }

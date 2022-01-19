@@ -181,5 +181,5 @@ window.ID = {
 	 "invitationRulesTitle":"Aturan hadiah undangan",
 	 "invitationRulesContent1":"Setelah teman memasukkan kode undangan untuk mendaftar, pengguna yang baru terdaftar bisa mendapatkan bonus pengalaman 3FEC.",
 	 "invitationRulesContent2":"Pengguna baru yang terdaftar menawar setidaknya 1FEC setiap hari selama 5 hari berturut-turut, dan perujuk bisa mendapatkan hadiah 2FEC.",
-	 "invitationRulesContent3":"FEC yang dihadiahi hanya dapat berpartisipasi dalam penawaran dan tidak dapat ditarik. ",
+	 "invitationRulesContent3":"FEC yang dihadiahi hanya dapat berpartisipasi dalam penawaran dan tidak dapat ditarik. Periode acara adalah dari 8 Januari 2022 hingga 8 Februari 2022. Hak interpretasi akhir acara adalah milik FES.",
 }

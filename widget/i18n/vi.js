@@ -180,5 +180,5 @@ window.VN = {
 	"invitationRulesTitle":"Quy tắc phần thưởng lời mời",
 	"invitationRulesContent1":"Sau khi bạn bè nhập mã mời để đăng ký, người dùng mới đăng ký có thể nhận được phần thưởng trải nghiệm 3FEC.",
 	"invitationRulesContent2":"Người dùng đã đăng ký mới đặt giá thầu ít nhất 1FEC mỗi ngày trong 5 ngày liên tiếp và người giới thiệu có thể nhận được phần thưởng 2FEC.",
-	"invitationRulesContent3":"FEC được thưởng chỉ có thể tham gia đấu thầu và không được rút lại. ",
+	"invitationRulesContent3":"FEC được thưởng chỉ có thể tham gia đấu thầu và không được rút lại.Thời gian diễn ra sự kiện từ ngày 8 tháng 1 năm 2022 đến ngày 8 tháng 2 năm 2022. Quyền giải thích cuối cùng của sự kiện thuộc về FES.",
 }

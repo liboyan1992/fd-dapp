@@ -177,8 +177,8 @@ window.EN = {
     "waitingFor": "Stay tuned",
     "loading": "Loading",
     "pleaseWait": "Please wait...",
-    "invitationRulesTitle":"Invitation reward rules",
-    "invitationRulesContent1":"After the friend enters the invitation code to register, the newly registered user can get the 3FEC experience bonus.",
-    "invitationRulesContent2":"New registered users bid at least 1FEC every day for 5 consecutive days, and the referrer can get 2FEC reward.",
-    "invitationRulesContent3":"The rewarded FEC can only participate in the bidding and cannot be withdrawn.",
+    "invitationRulesTitle":"【INVITE friends and REGISTER to earn FEC:】",
+    "invitationRulesContent1":"Newly registered users can receive 3 FEC tokens credited to their account after entering a referral code.",
+    "invitationRulesContent2":"Once newly registered users bid at least 1 FEC for 5 days consecutively, referrer will be awarded 2 FEC tokens.",
+    "invitationRulesContent3":"Referral Event will be from 8th Jan 2022 till 8th Feb 2022. FES reserve the rights to make changes should there be any.",
 }

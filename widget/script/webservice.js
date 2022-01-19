@@ -100,6 +100,7 @@
     var GENERATE_AWARD = 'lottery/generateAward'; //抽奖
     var LOTTERY_COUNT = 'lottery/lotteryCount'; //抽奖次数
     var INIT_DRAW_LIS = 'lottery/initDrawList'; //获取奖品列表
+    var PRIZE_LOG = 'lottery/prizeLog'; //获取中奖记录
 
 
 
@@ -214,6 +215,9 @@
     }
     initDrawLis = function() {
         return BASE_URL + INIT_DRAW_LIS;
+    }
+    prizeLog = function() {
+        return BASE_URL + PRIZE_LOG;
     }
 
 

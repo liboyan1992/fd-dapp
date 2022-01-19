@@ -180,5 +180,5 @@ window.TW = {
     "invitationRulesTitle":"邀請獎勵規則",
     "invitationRulesContent1":"好友輸入邀請碼註冊後，新註冊用戶即可獲得3FEC體驗金。",
     "invitationRulesContent2":"新註冊用戶每天競投至少1FEC，連續競投5天，推薦人可以獲得2FEC獎勵。",
-    "invitationRulesContent3":"獎勵的FEC只能參與競投，不能提現。",
+    "invitationRulesContent3":"獎勵的FEC只能參與競投，不能提現。活動時間為2022年1月8日—2022年2月8日。活動最終解釋權歸FES所有。",
 }

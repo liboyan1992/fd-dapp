@@ -180,5 +180,5 @@ window.JP = {
 	"invitationRulesTitle":"招待報酬ルール",
 	"invitationRulesContent1":"友人が登録するための招待コードを入力すると、新しく登録されたユーザーは3FECエクスペリエンスボーナスを獲得できます。",
 	"invitationRulesContent2":"新規登録ユーザーは、5日間連続して毎日少なくとも1FECで入札し、リファラーは2FECの報酬を受け取ることができます。",
-	"invitationRulesContent3":"報酬を与えられたFECは入札にのみ参加でき、撤回することはできません。 ",
+	"invitationRulesContent3":"報酬を与えられたFECは入札にのみ参加でき、撤回することはできません。イベント期間は2022年1月8日から2022年2月8日までです。 イベントの最終的な解釈権はFESに帰属します。",
 }

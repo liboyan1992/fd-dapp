@@ -17,6 +17,7 @@ Lottery.prototype = {
         this.oCanvas  = oCanvas;
         this.options  = this._setOptions(options);
         this.size     = (this.options.products || []).length;
+        this.switch = options.switch;
         this.angle    = 2 * Math.PI / this.size;
         this.sAngle   = 1.5*Math.PI - this.angle/2;
         this.ctx      = oCanvas.getContext("2d");
@@ -209,7 +210,7 @@ Lottery.prototype = {
     /*开始抽奖*/
     _start: function(){
         var self = this;
-        if(!this.options.handler)return;
+        if(!this.options.handler || !this.switch)return;
         this._fastClick(this.options.handler, function(ev){
             if(self.hasClass(this, 'disabled'))return;
             if(self.isOver){

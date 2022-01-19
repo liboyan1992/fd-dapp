@@ -180,5 +180,5 @@ window.KO = {
 	"invitationRulesTitle":"초대 보상 규칙",
 	"invitationRulesContent1":"친구가 초대 코드를 입력하여 등록한 후 새로 등록한 사용자는 3FEC 경험 보너스를 받을 수 있습니다.",
 	"invitationRulesContent2":"신규 등록 사용자는 연속 5일 동안 매일 최소 1FEC에 입찰하고 추천인은 2FEC 보상을 받을 수 있습니다.",
-	"invitationRulesContent3":"보상을 받은 FEC는 입찰에만 참여할 수 있으며 철회할 수 없습니다. ",
+	"invitationRulesContent3":"보상을 받은 FEC는 입찰에만 참여할 수 있으며 철회할 수 없습니다.이벤트 기간은 2022년 1월 8일부터 2022년 2월 8일까지입니다. 이벤트의 최종 해석권은 FES에 있습니다.",
 }

@@ -180,6 +180,6 @@ window.TR = {
 	"invitationRulesTitle":"Davetiye ödül kuralları",
 	"invitationRulesContent1":"Arkadaş kayıt olmak için davet kodunu girdikten sonra, yeni kayıt olan kullanıcı 3FEC deneyim bonusunu alabilir.",
 	"invitationRulesContent2":"Yeni kayıtlı kullanıcılar art arda 5 gün boyunca her gün en az 1FEC teklif verir ve yönlendiren 2FEC ödülü alabilir.",
-	"invitationRulesContent3":"Ödüllendirilen FEC, yalnızca ihaleye katılabilir ve geri alınamaz. ",
+	"invitationRulesContent3":"Ödüllendirilen FEC, yalnızca ihaleye katılabilir ve geri alınamaz.Etkinlik dönemi 8 Ocak 2022 ile 8 Şubat 2022 arasındadır. Etkinliğin son yorum hakkı FES'e aittir.",
 
 }
