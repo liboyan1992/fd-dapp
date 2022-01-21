@@ -91,13 +91,21 @@
         bottom: 10%;
         align-self: center;
     }
+    .lottery_btn {
+        padding-left: 30px;
+        font-size: 15px;
+        font-weight: bold;
+        color: #a0732a;
+    }
     </style>
 </head>
 <body>
     <div id='home' class='main-home'>
         <div class="user-info">
             <img class="user-avatar" src="../../image/img/taiji-small.png" alt=""/>
-            <div class="user-balance">{{balance| ellipsis}}</div>
+            <div class="user-balance">{{balance| ellipsis}}
+                            <!-- 抽奖 -->
+            </div>
             <div class="pull-right">
                 <van-icon name="music" :color="musicColor" size="25" @click="toggleMusic"/>&nbsp;
             </div>
@@ -105,6 +113,9 @@
                 <van-icon name="friends" color="#a0732a"  size="25" @click="toFriends"/>
             </div>
         </div>
+        <div class="lottery_btn"  @click="toLottery">
+            <span>🔥{{$t("lang.lotteryBtn")}}</span>
+          </div>
         <vue-p5 class="draw-area"
                 @preload="preload"
                 @setup="setup"
@@ -470,7 +481,17 @@
                         })
                     }, 3000);
                 });
-            }
+            },
+            toLottery() {
+        api.notification({
+          vibrate: [100, 500],
+          sound: 'widget://sound/ding.mp3'
+        });
+        api.openWin({
+          name: 'lottery',
+          url: '../activity/lottery.html',
+        });
+      },
         },
     };
     setLanguage = function () {

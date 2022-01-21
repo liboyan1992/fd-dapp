@@ -182,4 +182,34 @@ window.TR = {
 	"invitationRulesContent2":"Yeni kayıtlı kullanıcılar art arda 5 gün boyunca her gün en az 1FEC teklif verir ve yönlendiren 2FEC ödülü alabilir.",
 	"invitationRulesContent3":"Ödüllendirilen FEC, yalnızca ihaleye katılabilir ve geri alınamaz.Etkinlik dönemi 8 Ocak 2022 ile 8 Şubat 2022 arasındadır. Etkinliğin son yorum hakkı FES'e aittir.",
 
+	"lotteryRuleTitle1":"Nasıl katılınır?",
+    "lotteryRuleContent1_1":"7 gün içinde, toplamda 1000'den fazla FEC'yi başarıyla teklif edin.hesaplama her Pazartesi sabahı 0:00'da başlar ve mevcut haftanın istatistikleri Pazar günü 00:00'da hesaplanır.",
+    "lotteryRuleContent1_2":" Yukarıdaki kriterleri karşılayan tüm hesaplar, airdrop etkinliğine katılmaya uygundur.",
+    "lotteryRuleContent1_3":"Tüm hesapların bu Airdrop Etkinliğine katılmak için yalnızca 1 şansı vardır.",
+    "piyangoRuleContent1_4":"",
+
+    "piyangoRuleTitle2":"Etkinlik Dönemi：28/2/2022'ye Kadar",
+    "lotteryRuleContent2_1":"",
+
+    "lotteryRuleTitle3":"Kazanılacak ödüller",
+    "lotteryRuleContent3_1":"1. Ödül:",
+    "lotteryRuleContent3_2":"2. Ödül:",
+    "lotteryRuleContent3_3":"Üçüncülük Ödülü: ",
+    "lotteryRuleContent3_4":"4. Ödül:",
+    "lotteryRuleContent3_5":"5. Ödül:",
+    "lotteryRuleContent3_6":"6. Ödül: ",
+
+    "lotteryRuleTitle4":"veya en son güncellemelerimiz, lütfen bizi FES Telegram Grubunda takip edin:",
+    "lotteryRuleContent4_1":"Telegram Uygulamasını Açın FES Resmi Grubuna Katılın:",
+    "lotteryRuleContent4_2":"FES Duyurumuza abone olun:",
+    "lotteryRuleContent4_3":"En son güncellemelerimizle ilgili bildirimleri almak için Katıl a dokunun!",
+    "lotteryRuleContent4_4":"*FES, yukarıda belirtilenlerde herhangi bir değişiklik yapma hakkını saklı tutar.",
+
+"lotteryPrizeLog1":"Tebrikler",
+     "lotteryPrizeLog2":"Kullanıcı alındı",
+     "piyangoNumber1":"Hala var",
+     "piyangoNumber2":"piyango çekilişi şansı",
+     "lotterydialogBox1":"Aldığınız için tebrikler",
+     "lotterydialogBox2":"Şimdi alın",
+		 "lotteryBtn": "Milyon FEC Şanslı Çekiliş",
 }

@@ -181,4 +181,36 @@ window.TW = {
     "invitationRulesContent1":"好友輸入邀請碼註冊後，新註冊用戶即可獲得3FEC體驗金。",
     "invitationRulesContent2":"新註冊用戶每天競投至少1FEC，連續競投5天，推薦人可以獲得2FEC獎勵。",
     "invitationRulesContent3":"獎勵的FEC只能參與競投，不能提現。活動時間為2022年1月8日—2022年2月8日。活動最終解釋權歸FES所有。",
+
+    "lotteryRuleTitle1":"如何參與：",
+    "lotteryRuleContent1_1":"在APP內7天有效競投累計數額超過1000FEC，每週一早上0點開始計算，週日晚上0點統計本週的。",
+    "lotteryRuleContent1_2":"報名培訓的用戶，必須連續7天參與競投，每天至少競投1FEC",
+    "lotteryRuleContent1_3":"每個賬戶滿足以上任意條件即可獲得一次抽獎資格，僅限參與一次",
+    "lotteryRuleContent1_4":"線上線下已中過獎的用戶將無法重複參與",
+
+    "lotteryRuleTitle2":"活動時間：",
+    "lotteryRuleContent2_1":"即日起至2022年2月28日24點 GMT+8",
+
+    "lotteryRuleTitle3":"獎勵設置：",
+    "lotteryRuleContent3_1":"一等獎:",
+    "lotteryRuleContent3_2":"二等獎:",
+    "lotteryRuleContent3_3":"三等獎:",
+    "lotteryRuleContent3_4":"四等獎:",
+    "lotteryRuleContent3_5":"五等獎:",
+    "lotteryRuleContent3_6":"六等獎:",
+
+    "lotteryRuleTitle4":"欲了解更多精彩活動，歡迎加入FES電報群。",
+    "lotteryRuleContent4_1":"FEC亞太共識群：",
+    "lotteryRuleContent4_2":"FES官方頻道：",
+    "lotteryRuleContent4_3":"點擊上方藍色鏈接“加入”, 並點擊“開啟通知”即可",
+    "lotteryRuleContent4_4":"*活動最終解釋權歸FES所有",
+
+    "lotteryPrizeLog1":"恭喜",
+    "lotteryPrizeLog2":"用戶獲得",
+    "lotteryNumber1":"你還有",
+    "lotteryNumber2":"次抽獎機會",
+    "lotterydialogBox1":"恭喜您獲得",
+    "lotterydialogBox2":"立即領取",
+    "lotteryBtn": "百萬FEC大抽獎",
+    
 }

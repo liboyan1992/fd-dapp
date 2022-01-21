@@ -245,12 +245,6 @@
               <span class="txt-desc flex-right" style="padding-right: 2vw;">{{ $t('lang.version') }}</span>
             </div>
         </div>
-        <div class="flex flex-h" style="width: 100%;margin-top: 2vw;">
-            <!-- 抽奖 -->
-            <div class="flex-1 flex-left flex flex-h"  @click="toSweepstakes">
-              <span class="panel-title flex-1 flex-left">{{$t("lang.lotteryTitle")}}</span>
-            </div>
-        </div>
       </div>
     </div>
     <div><van-action-sheet v-model="showLang" :actions="arrLang" @select="selLanguage" :cancel-text="$t('lang.cancel')" close-on-click-action /></div>
@@ -738,16 +732,6 @@
           pageParam: {
             userId: this.userId
           }
-        });
-      },
-      toSweepstakes() {
-        api.notification({
-          vibrate: [100, 500],
-          sound: 'widget://sound/ding.mp3'
-        });
-        api.openWin({
-          name: 'lottery',
-          url: '../activity/lottery.html',
         });
       },
     },

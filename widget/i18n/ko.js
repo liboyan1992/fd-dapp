@@ -181,4 +181,35 @@ window.KO = {
 	"invitationRulesContent1":"친구가 초대 코드를 입력하여 등록한 후 새로 등록한 사용자는 3FEC 경험 보너스를 받을 수 있습니다.",
 	"invitationRulesContent2":"신규 등록 사용자는 연속 5일 동안 매일 최소 1FEC에 입찰하고 추천인은 2FEC 보상을 받을 수 있습니다.",
 	"invitationRulesContent3":"보상을 받은 FEC는 입찰에만 참여할 수 있으며 철회할 수 없습니다.이벤트 기간은 2022년 1월 8일부터 2022년 2월 8일까지입니다. 이벤트의 최종 해석권은 FES에 있습니다.",
+
+	"lotteryRuleTitle1":"가입 방법은?",
+    "lotteryRuleContent1_1":"7일 이내에 총 1000개 이상의 FEC 입찰에 성공했습니다.계산은 매주 월요일 오전 0시에 시작되며 현재 주의 통계는 일요일 오후 0시에 계산됩니다.",
+    "lotteryRuleContent1_2":" 위의 기준을 충족하는 모든 계정은 에어드랍 이벤트에 참여할 수 있습니다.",
+    "lotteryRuleContent1_3":"모든 계정은 이 에어드롭 이벤트에 참여할 수 있는 기회가 1회만 있습니다.",
+    "lotteryRuleContent1_4":"",
+
+    "lotteryRuleTitle2": "이벤트 기간: 2022년 2월 28일까지",
+    "lotteryRuleContent2_1":"",
+
+    "lotteryRuleTitle3":" 당첨된 상품",
+    "lotteryRuleContent3_1":"1등상:",
+    "lotteryRuleContent3_2":"2등상:",
+    "lotteryRuleContent3_3":"3등상: ",
+    "lotteryRuleContent3_4":"4등상:",
+    "lotteryRuleContent3_5":"5등상:",
+    "lotteryRuleContent3_6":"6등상: ",
+
+    "lotteryRuleTitle4":"또는 최신 업데이트는 FES Telegram Group에서 팔로우하세요:",
+    "lotteryRuleContent4_1":"텔레그램 애플리케이션을 열고 FES 공식 그룹에 가입하세요:",
+    "lotteryRuleContent4_2":"FES 발표 구독:",
+    "lotteryRuleContent4_3":"최신 업데이트에 대한 알림을 받으려면 가입 을 탭하세요!",
+    "lotteryRuleContent4_4":"*FES는 위에 언급된 내용을 변경할 수 있는 모든 권한을 보유합니다.",
+
+		"lotteryPrizeLog1":"축하합니다",
+     "lotteryPrizeLog2": "사용자 획득",
+     "lotteryNumber1": "아직 가지고 있습니다",
+     "lotteryNumber2": "복권 추첨 기회",
+     "lotterydialogBox1":"구입 축하합니다",
+     "lotterydialogBox2": "지금 구입",
+		 "lotteryBtn": "백만 FEC 행운의 추첨",
 }

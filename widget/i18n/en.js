@@ -181,4 +181,35 @@ window.EN = {
     "invitationRulesContent1":"Newly registered users can receive 3 FEC tokens credited to their account after entering a referral code.",
     "invitationRulesContent2":"Once newly registered users bid at least 1 FEC for 5 days consecutively, referrer will be awarded 2 FEC tokens.",
     "invitationRulesContent3":"Referral Event will be from 8th Jan 2022 till 8th Feb 2022. FES reserve the rights to make changes should there be any.",
+  
+    "lotteryRuleTitle1":"How to join?",
+    "lotteryRuleContent1_1":"Within 7 days, successfully bid over 1000 FECs in total.the calculation starts at 0:00 every Monday morning, and the current week's statistics are calculated at 0:00 pm on Sunday.",
+    "lotteryRuleContent1_2":" All accounts to fulfil the above criteria is eligible to participate in the airdrop event.",
+    "lotteryRuleContent1_3":"All accounts are entitled to only 1 chance to participate in this Airdrop Event.",
+    "lotteryRuleContent1_4":"",
+
+    "lotteryRuleTitle2":"Event Period：Till 28/2/2022",
+    "lotteryRuleContent2_1":"",
+
+    "lotteryRuleTitle3":"Prizes to be won",
+    "lotteryRuleContent3_1":"1st Prize:",
+    "lotteryRuleContent3_2":"2nd Prize:",
+    "lotteryRuleContent3_3":"3rd Prize: ",
+    "lotteryRuleContent3_4":"4th Prize:",
+    "lotteryRuleContent3_5":"5th Prize:",
+    "lotteryRuleContent3_6":"6th Prize: ",
+
+    "lotteryRuleTitle4":"or our latest updates, please follow us on FES Telegram Group:",
+    "lotteryRuleContent4_1":"Open the Telegram Application Join the FES Official Group:",
+    "lotteryRuleContent4_2":"Subscribe our FES Announcement:",
+    "lotteryRuleContent4_3":"Tap “Join” to receive notifications on our latest updates!",
+    "lotteryRuleContent4_4":"*FES reserves all rights to make any changes in the above mentioned.",
+
+    "lotteryPrizeLog1":"Congratulations",
+     "lotteryPrizeLog2":"User obtained",
+     "lotteryNumber1":"You still have",
+     "lotteryNumber2":"lottery draw chances",
+     "lotterydialogBox1":"Congratulations on getting it",
+     "lotterydialogBox2":"Get it now",
+     "lotteryBtn": "Million FEC Lucky Draw",
 }

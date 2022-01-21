@@ -181,4 +181,35 @@ window.AR = {
 	"invitationRulesContent1":"بعد أن يقوم الصديق بإدخال رمز الدعوة للتسجيل ، يمكن للمستخدم المسجل حديثًا الحصول على مكافأة تجربة 3FEC.",
 	"invitationRulesContent2":"يقوم المستخدمون المسجلون الجدد بالمزايدة على 1FEC كل يوم على الأقل لمدة 5 أيام متتالية ، ويمكن للمحيل الحصول على مكافأة 2FEC.",
 	"invitationRulesContent3":"يمكن لمركز أصدقاء البيئة (FEC) الحاصل على المكافأة المشاركة فقط في العطاء ولا يمكن سحبه.تمتد فترة الحدث من 8 يناير 2022 إلى 8 فبراير 2022. يعود حق التفسير النهائي للحدث إلى مؤسسة فريدريش إيبرت.",
+	
+	"lotteryRuleTitle1":"كيف تنضم?",
+	"lotteryRuleContent1_1":"في غضون 7 أيام ، يمكنك المزايدة بنجاح على أكثر من 1000 FEC إجمالاً.، يبدأ الحساب في الساعة 0:00 صباح كل يوم إثنين ، ويتم حساب إحصائيات الأسبوع الحالي في الساعة 0:00 مساءً يوم الأحد.",
+	"lotteryRuleContent1_2":" جميع الحسابات التي تفي بالمعايير المذكورة أعلاه مؤهلة للمشاركة في حدث الإنزال الجوي.",
+	"lotteryRuleContent1_3":"يحق لجميع الحسابات فرصة واحدة فقط للمشاركة في حدث Airdrop هذا.",
+	"lotteryRuleContent1_4":"",
+
+	"lotteryRuleTitle2":"فترة الحدث: حتى 28/2/2022",
+	"lotteryRuleContent2_1":"",
+
+	"lotteryRuleTitle3":"الجوائز التي ستفوز بها",
+	"lotteryRuleContent3_1":"الجائزة الأولى:",
+	"lotteryRuleContent3_2":"الجائزة الثانية:",
+	"lotteryRuleContent3_3":"الجائزة الثالثة:",
+	"lotteryRuleContent3_4":"الجائزة الرابعة:",
+	"lotteryRuleContent3_5":"الجائزة الخامسة:",
+	"lotteryRuleContent3_6":"الجائزة السادسة:",
+
+	"lotteryRuleTitle4":"أو آخر تحديثاتنا ، يرجى متابعتنا على FES Telegram Group:",
+	"lotteryRuleContent4_1":"افتح تطبيق Telegram وانضم إلى مجموعة FES الرسمية: ",
+	"lotteryRuleContent4_2":"اشترك في إعلان FES الخاص بنا:",
+	"lotteryRuleContent4_3":"انقر على انضمام لتلقي إشعارات بآخر تحديثاتنا! ",
+	"lotteryRuleContent4_4":"** تحتفظ FES بجميع الحقوق لإجراء أي تغييرات في المذكور أعلاه.",
+
+	"lotteryPrizeLog1": "تهانينا",
+  "lotteryPrizeLog2": "حصل المستخدم",
+  "lotteryNumber1": "لا يزال لديك" ,
+  "lotteryNumber2": "فرص سحب اليانصيب",
+  "lotterydialogBox1": "تهانينا على حصولك عليه" ,
+  "lotterydialogBox2": "احصل عليه الآن",
+  "lotteryBtn": "السحب المحظوظ لمليون FEC"
 }

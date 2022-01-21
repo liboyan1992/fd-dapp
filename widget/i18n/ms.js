@@ -181,4 +181,35 @@ window.MS = {
 	"invitationRulesContent1":"Selepas rakan memasukkan kod jemputan untuk mendaftar, pengguna yang baru mendaftar boleh mendapat bonus pengalaman 3FEC.",
 	"invitationRulesContent2":"Pengguna berdaftar baharu membida sekurang-kurangnya 1FEC setiap hari selama 5 hari berturut-turut, dan perujuk boleh mendapat ganjaran 2FEC.",
 	"invitationRulesContent3":"FEC yang diberi ganjaran hanya boleh mengambil bahagian dalam bidaan dan tidak boleh ditarik balik.Tempoh acara adalah dari 8 Januari 2022 hingga 8 Februari 2022. Hak tafsiran akhir acara tersebut adalah milik FES.",	
+
+	"lotteryRuleTitle1":"Bagaimana untuk menyertai?",
+    "lotteryRuleContent1_1": "Dalam masa 7 hari, berjaya membida lebih 1000 FEC secara keseluruhan.pengiraan bermula pada 0:00 setiap pagi Isnin, dan statistik minggu semasa dikira pada 0:00 petang pada hari Ahad.",
+    "lotteryRuleContent1_2":" Semua akaun yang memenuhi kriteria di atas layak untuk menyertai acara airdrop.",
+    "lotteryRuleContent1_3": "Semua akaun berhak mendapat 1 peluang sahaja untuk menyertai Acara Airdrop ini.",
+    "lotteryRuleContent1_4":"",
+
+    "lotteryRuleTitle2":"Tempoh Acara：Hingga 28/2/2022",
+    "lotteryRuleContent2_1":"",
+
+    "lotteryRuleTitle3":"Hadiah untuk dimenangi",
+    "lotteryRuleContent3_1":"Hadiah Pertama:",
+    "lotteryRuleContent3_2":"Hadiah Kedua:",
+    "lotteryRuleContent3_3":"Hadiah Ketiga: ",
+    "lotteryRuleContent3_4":"Hadiah Ke-4:",
+    "lotteryRuleContent3_5":"Hadiah ke-5:",
+    "lotteryRuleContent3_6":"Hadiah ke-6: ",
+
+    "lotteryRuleTitle4":"atau kemas kini terkini kami, sila ikuti kami di FES Telegram Group:",
+    "lotteryRuleContent4_1":"Buka Aplikasi Telegram Sertai Kumpulan Rasmi FES:",
+    "lotteryRuleContent4_2":"Langgan Pengumuman FES kami:",
+    "lotteryRuleContent4_3":"Ketik Sertai untuk menerima pemberitahuan tentang kemas kini terbaharu kami!",
+    "lotteryRuleContent4_4":"*FES berhak untuk membuat sebarang perubahan dalam perkara yang disebutkan di atas.",
+
+		"lotteryPrizeLog1":"Tahniah",
+     "lotteryPrizeLog2":"Pengguna diperoleh",
+     "lotteryNumber1":"Anda masih mempunyai",
+     "lotteryNumber2":"peluang cabutan loteri",
+     "lotterydialogBox1":"Tahniah kerana mendapatnya",
+     "lotterydialogBox2":"Dapatkan sekarang",
+		 "lotteryBtn": "Jutaan Cabutan Bertuah FEC",
 }

@@ -181,4 +181,35 @@ window.VN = {
 	"invitationRulesContent1":"Sau khi bạn bè nhập mã mời để đăng ký, người dùng mới đăng ký có thể nhận được phần thưởng trải nghiệm 3FEC.",
 	"invitationRulesContent2":"Người dùng đã đăng ký mới đặt giá thầu ít nhất 1FEC mỗi ngày trong 5 ngày liên tiếp và người giới thiệu có thể nhận được phần thưởng 2FEC.",
 	"invitationRulesContent3":"FEC được thưởng chỉ có thể tham gia đấu thầu và không được rút lại.Thời gian diễn ra sự kiện từ ngày 8 tháng 1 năm 2022 đến ngày 8 tháng 2 năm 2022. Quyền giải thích cuối cùng của sự kiện thuộc về FES.",
+
+	"lotteryRuleTitle1": "Làm thế nào để tham gia?",
+    "lotteryRuleContent1_1": "Trong vòng 7 ngày, hãy đặt giá thầu thành công tổng cộng hơn 1000 FEC.quá trình tính toán bắt đầu lúc 0:00 sáng Thứ Hai hàng tuần và thống kê của tuần hiện tại được tính vào 0:00 chiều Chủ Nhật.",
+    "lotteryRuleContent1_2": "Tất cả các tài khoản đáp ứng các tiêu chí trên đều đủ điều kiện tham gia sự kiện airdrop.",
+    "lotteryRuleContent1_3": "Tất cả các tài khoản chỉ có 1 cơ hội duy nhất để tham gia Sự kiện Airdrop này.",
+    "lotteryRuleContent1_4": "",
+
+    "lotteryRuleTitle2": "Giai đoạn sự kiện ： Đến ngày 28/2/2022",
+    "lotteryRuleContent2_1": "",
+
+    "lotteRuleTitle3": "Giải thưởng sẽ giành được",
+    "lotteryRuleContent3_1": "Giải nhất:",
+    "lotteryRuleContent3_2": "Giải 2:",
+    "lotteryRuleContent3_3": "Giải 3:",
+    "lotteryRuleContent3_4": "Giải 4:",
+    "lotteryRuleContent3_5": "Giải 5:",
+    "lotteryRuleContent3_6": "Giải 6:",
+
+    "lotteRuleTitle4": "hoặc các bản cập nhật mới nhất của chúng tôi, vui lòng theo dõi chúng tôi trên FES Telegram Group:",
+    "lotteryRuleContent4_1": "Mở ứng dụng Telegram Tham gia nhóm chính thức của FES: ",
+    "lotteryRuleContent4_2": "Đăng ký Thông báo FES của chúng tôi: ",
+    "lotteryRuleContent4_3": "Nhấn vào Tham gia để nhận thông báo về các bản cập nhật mới nhất của chúng tôi!",
+    "lotteryRuleContent4_4": "* FES bảo lưu mọi quyền để thực hiện bất kỳ thay đổi nào trong những điều đã đề cập ở trên.",
+
+		"lotteryPrizeLog1": "Xin chúc mừng",
+    "lotteryPrizeLog2": "Người dùng có được",
+    "lotteNumber1": "Bạn vẫn còn",
+    "lotteryNumber2": "cơ hội rút thăm xổ số",
+    "lotdialogBox1": "Chúc mừng bạn đã nhận được nó",
+    "lotdialogBox2": "Tải xuống ngay bây giờ",
+		"lotteryBtn": "Rút thăm may mắn triệu FEC",
 }

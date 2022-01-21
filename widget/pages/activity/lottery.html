@@ -116,7 +116,7 @@
         <div class="box">
           <ul class="lb" :class="{marquee_top:animate}">
             <li v-for="(item, index) in list" :key="index">
-              恭喜{{item.username|name}}用户获得{{item.prize}}FES
+              {{$t('lang.lotteryPrizeLog1')}}{{item.username|name}}{{$t('lang.lotteryPrizeLog2')}}{{item.prize}}FES
             </li>
           </ul>
         </div>
@@ -124,37 +124,37 @@
     </div>
 
     <div class="lottery_number">
-      你还有{{lotteryCount}}次抽奖机会
+      {{$t('lang.lotteryNumber1')}}{{lotteryCount}}{{$t('lang.lotteryNumber2')}}
     </div>
     <div id="lottery-wrap">
       <button id="handler" type="button"></button>
       <canvas width="300" height="300" id="lottery"></canvas>
     </div>
     <div class="lottery_rule">
-      <h3>如何参与：</h3>
-      1.在APP内7天有效竞投累计数额超过1000FEC <br>
-      2.报名培训的用户，必须连续7天参与竞投，每天至少竞投1FEC <br>
-      3.每个账户满足以上任意条件即可获得一次抽奖资格，仅限参与一次<br>
-      4.线上线下已中过奖的用户将无法重复参与<br><br>
+      <h3>{{$t("lang.lotteryRuleTitle1")}}</h3>
+      1.{{$t("lang.lotteryRuleContent1_1")}}<br>
+      2.{{$t("lang.lotteryRuleContent1_2")}}<br>
+      3.{{$t("lang.lotteryRuleContent1_3")}}<br>
+      4.{{$t("lang.lotteryRuleContent1_4")}}<br><br>
 
 
-      <h3> 活动时间：</h3>
-      即日起至2022年2月28日24点 GMT+8<br><br>
+      <h3> {{$t("lang.lotteryRuleTitle2")}}</h3>
+      {{$t("lang.lotteryRuleContent2_1")}}<br><br>
 
-      <h3>奖励设置：</h3>
-      一等奖: 15,888 FEC<br>
-      二等奖: 8,888 FEC<br>
-      三等奖: 2,888 FEC<br>
-      四等奖: 588 FEC <br>
-      五等奖: 188 FEC<br>
-      六等奖: 88 FEC <br><br>
+      <h3>{{$t("lang.lotteryRuleTitle3")}}</h3>
+      {{$t("lang.lotteryRuleContent3_1")}} 15,888 FEC<br>
+      {{$t("lang.lotteryRuleContent3_2")}} 8,888 FEC<br>
+      {{$t("lang.lotteryRuleContent3_3")}} 2,888 FEC<br>
+      {{$t("lang.lotteryRuleContent3_4")}} 588 FEC <br>
+      {{$t("lang.lotteryRuleContent3_5")}} 188 FEC<br>
+      {{$t("lang.lotteryRuleContent3_6")}} 88 FEC <br><br>
 
-      欲了解更多精彩活动，欢迎加入FES电报群。<br>
-      FEC亚太共识群：<a href="https://t.me/+l3mdJzsapLRkNGE1">https://t.me/+l3mdJzsapLRkNGE1</a><br>
-      FES官方频道：<a href="https://t.me/FiveElementSystemChannelCN">https://t.me/FiveElementSystemChannelCN</a> <br>
-      点击上方蓝色链接“加入”, 并点击“开启通知”即可<br><br>
+      {{$t("lang.lotteryRuleTitle4")}}<br>
+      {{$t("lang.lotteryRuleContent4_1")}} <a :href="telegramGroup">{{telegramGroup}}</a><br>
+      {{$t("lang.lotteryRuleContent4_2")}} <a :href="telegramChannel">{{telegramChannel}}</a><br>
+      {{$t("lang.lotteryRuleContent4_3")}}<br><br>
 
-      *活动最终解释权归FES所有<br><br>
+      {{$t("lang.lotteryRuleContent4_4")}}<br><br>
     </div>
   </div>
 </body>
@@ -171,6 +171,25 @@
         list: []
       };
     },
+    computed: {
+
+    telegramGroup () {
+      const locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+      if(locale === 'cn'){
+        return 'https://t.me/+l3mdJzsapLRkNGE1'
+      }else{
+        return 'https://t.me/FiveElementsSystemGroupEN'
+      }
+    },
+    telegramChannel () {
+      const locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+      if(locale === 'cn'){
+        return 'https://t.me/FiveElementSystemChannelCN'
+      }else{
+        return 'https://t.me/FiveElementSystemChannelEN'
+      }
+    }
+  },
     filters: {
       email: function(value) {
         if (value && value.length > 6) {
@@ -190,7 +209,6 @@
     },
 
     created() {
-
       POST(prizeLog(), { token: api.getPrefs({ sync: true, key: KEY_TOKEN }), }, (ret, err) => {
         this.list = ret.data;
       });
@@ -205,9 +223,9 @@
           },
           texts: {
             content: [{
-              text: `恭喜您获得${amount}FEC`
+              text: this.$t('lang.lotterydialogBox1')+`${amount}FEC`
             }],
-            btnTitle: '立即领取'
+            btnTitle: this.$t('lang.lotterydialogBox2')
           },
           styles: {
             bg: '../../image/img/dialogBox_lottery2.png',

@@ -181,4 +181,36 @@ window.JP = {
 	"invitationRulesContent1":"友人が登録するための招待コードを入力すると、新しく登録されたユーザーは3FECエクスペリエンスボーナスを獲得できます。",
 	"invitationRulesContent2":"新規登録ユーザーは、5日間連続して毎日少なくとも1FECで入札し、リファラーは2FECの報酬を受け取ることができます。",
 	"invitationRulesContent3":"報酬を与えられたFECは入札にのみ参加でき、撤回することはできません。イベント期間は2022年1月8日から2022年2月8日までです。 イベントの最終的な解釈権はFESに帰属します。",
+
+	"lotteryRuleTitle1": "参加するには？",
+    "lotteryRuleContent1_1": "7日以内に、合計1000以上のFECに落札しました。計算は毎週月曜日の午前0時に開始され、今週の統計は日曜日の午後0時に計算されます。",
+    "lotteryRuleContent1_2": "上記の基準を満たすすべてのアカウントは,エアドロップイベントに参加する資格があります。",
+    "lotteryRuleContent1_3": "すべてのアカウントは,このエアドロップイベントに参加するチャンスが1回だけあります。",
+    "lotteryRuleContent1_4": "",
+
+    "lotteryRuleTitle2": "イベント期間:2022年2月28日まで",
+    "lotteryRuleContent2_1": "",
+
+    "lotteryRuleTitle3": "賞品が当たる",
+    "lotteryRuleContent3_1": "1等賞:",
+    "lotteryRuleContent3_2": "2等賞:",
+    "lotteryRuleContent3_3": "3等賞:",
+    "lotteryRuleContent3_4": "4等賞:",
+    "lotteryRuleContent3_5": "5等賞:",
+    "lotteryRuleContent3_6": "6等賞:",
+
+    "lotteryRuleTitle4": "または最新のアップデートについては,FES Telegram Groupでフォローしてください:",
+    "lotteryRuleContent4_1": "テレグラムアプリケーションを開き,FES公式グループに参加します:",
+    "lotteryRuleContent4_2": "FESアナウンスを購読する:",
+    "lotteryRuleContent4_3": "[参加]をタップして,最新の更新に関する通知を受け取ります！",
+    "lotteryRuleContent4_4": "* FESは,上記の変更を行うすべての権利を留保します。",
+
+
+		"lotteryPrizeLog1": "おめでとうございます",
+     "lotteryPrizeLog2": "ユーザーが取得しました",
+     "lotteryNumber1": "まだあります",
+     "lotteryNumber2": "宝くじ抽選のチャンス",
+     "lotterydialogBox1": "おめでとうございます",
+     "lotterydialogBox2": "今すぐ入手",
+		 "lotteryBtn": "ミリオンFECラッキードロー",
 }

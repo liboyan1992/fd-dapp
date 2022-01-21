@@ -182,4 +182,35 @@ window.ID = {
 	 "invitationRulesContent1":"Setelah teman memasukkan kode undangan untuk mendaftar, pengguna yang baru terdaftar bisa mendapatkan bonus pengalaman 3FEC.",
 	 "invitationRulesContent2":"Pengguna baru yang terdaftar menawar setidaknya 1FEC setiap hari selama 5 hari berturut-turut, dan perujuk bisa mendapatkan hadiah 2FEC.",
 	 "invitationRulesContent3":"FEC yang dihadiahi hanya dapat berpartisipasi dalam penawaran dan tidak dapat ditarik. Periode acara adalah dari 8 Januari 2022 hingga 8 Februari 2022. Hak interpretasi akhir acara adalah milik FES.",
-}
+
+	 "lotteryRuleTitle1":"Bagaimana cara bergabung?",
+	 "lotteryRuleContent1_1":"Dalam 7 hari, berhasil menawar lebih dari 1000 FEC secara total.perhitungan dimulai pada pukul 0:00 setiap Senin pagi, dan statistik minggu ini dihitung pada pukul 0:00 pada hari Minggu.",
+	 "lotteryRuleContent1_2":" Semua akun yang memenuhi kriteria di atas memenuhi syarat untuk berpartisipasi dalam acara airdrop.",
+	 "lotteryRuleContent1_3":"Semua akun hanya berhak atas 1 kesempatan untuk berpartisipasi dalam Acara Airdrop ini.",
+	 "lotteryRuleContent1_4":"",
+
+	 "lotteryRuleTitle2":"Periode Acara：Hingga 28/2/2022",
+	 "lotteryRuleContent2_1":"",
+
+	 "lotteryRuleTitle3":"Hadiah yang akan dimenangkan",
+	 "lotteryRuleContent3_1":"Hadiah Pertama:",
+	 "lotteryRuleContent3_2":"Hadiah Kedua:",
+	 "lotteryRuleContent3_3":"Hadiah Ketiga: ",
+	 "lotteryRuleContent3_4":"Hadiah ke-4:",
+	 "lotteryRuleContent3_5":"Hadiah ke-5:",
+	 "lotteryRuleContent3_6":"Hadiah ke-6: ",
+
+	 "lotteryRuleTitle4":"atau update terbaru kami, ikuti kami di FES Telegram Group:",
+	 "lotteryRuleContent4_1":"Buka Aplikasi Telegram Bergabunglah dengan Grup Resmi FES:",
+	 "lotteryRuleContent4_2":"Berlangganan Pengumuman FES kami",
+	 "lotteryRuleContent4_3":"Ketuk Gabung untuk menerima pemberitahuan tentang pembaruan terbaru kami!",
+	 "lotteryRuleContent4_4":"*FES berhak membuat perubahan apa pun yang disebutkan di atas.",
+
+	 "lotteryPrizeLog1":"Selamat",
+     "lotteryPrizeLog2":"Pengguna diperoleh",
+     "lotteryNumber1":"Anda masih punya",
+     "lotteryNumber2":"peluang undian lotere",
+     "lotterydialogBox1":"Selamat telah mendapatkannya",
+     "lotterydialogBox2":"Dapatkan sekarang",
+		 "lotteryBtn": "Sejuta Undian FEC",
+	}
