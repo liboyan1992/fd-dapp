@@ -183,10 +183,16 @@ window.CN = {
     "invitationRulesContent3":"奖励的FEC只能参与竞投，不能提现。活动时间为2022年1月8日—2022年2月8日。活动最终解释权归FES所有",
    
     "lotteryRuleTitle1":"如何参与：",
-    "lotteryRuleContent1_1":"在APP内7天有效竞投累计数额超过1000FEC，每周一早上0点开始计算，周日晚上0点统计本周的。",
-    "lotteryRuleContent1_2":"报名培训的用户，必须连续7天参与竞投，每天至少竞投1FEC",
-    "lotteryRuleContent1_3":"每个账户满足以上任意条件即可获得一次抽奖资格，仅限参与一次",
+    "lotteryRuleContent1_1":"用户需要一周内在APP有效竞投累计数额超过1000FEC",
+    "lotteryRuleContent1_2":"报名培训的用户，一周必须累计七次参与竞投，每次至少竞投1FEC",
+    "lotteryRuleContent1_3":"每个账户满足以上任意条件即可获得一次抽奖资格，所有用户仅限参与一次",
     "lotteryRuleContent1_4":"线上线下已中过奖的用户将无法重复参与",
+    "lotteryRuleContent1_5":"中奖FEC会转入A户，用户可在A户中即刻查询中奖结果",
+
+    "lotteryRuleNotice":"温馨提示：",
+    "lotteryRuleNoticeContent1":"周一到周日为一个结算周期，每周一会开启新一轮计算，周日进行本周7天的计算，上周的竞投金额和竞投次数无法累积到下周。",
+    "lotteryRuleNoticeContent2":"2月1日至2月8日期间，一等奖奖励为28,888FEC，所有用户仅限参与一次。",
+
 
     "lotteryRuleTitle2":"活动时间：",
     "lotteryRuleContent2_1":"即日起至2022年2月28日24点 GMT+8",
@@ -200,10 +206,11 @@ window.CN = {
     "lotteryRuleContent3_6":"六等奖:",
 
     "lotteryRuleTitle4":"欲了解更多精彩活动，欢迎加入FES电报群。",
-    "lotteryRuleContent4_1":`FEC亚太共识群：`,
-    "lotteryRuleContent4_2":`FES官方频道：`,
-    "lotteryRuleContent4_3":"点击上方蓝色链接“加入”, 并点击“开启通知”即可",
-    "lotteryRuleContent4_4":"*活动最终解释权归FES所有",
+    "lotteryRuleContent4_1": "打开Telegram软件",
+    "lotteryRuleContent4_2":`加入FEC亚太共识群：`,
+    "lotteryRuleContent4_3":"订阅FES官方频道：",
+    "lotteryRuleContent4_4":"点击上方蓝色链接“加入”, 并点击“开启通知”即可",
+    "lotteryRuleContent4_5":"*活动最终解释权归FES所有",
 
     "lotteryPrizeLog1":"恭喜",
     "lotteryPrizeLog2":"用户获得",

@@ -57,8 +57,7 @@
     }
 
     .lottery_number {
-      width: 200px;
-      height: 36px;
+      width: 90%;
       line-height: 36px;
       margin-top: 20px;
       margin-bottom: 40px;
@@ -116,7 +115,7 @@
         <div class="box">
           <ul class="lb" :class="{marquee_top:animate}">
             <li v-for="(item, index) in list" :key="index">
-              {{$t('lang.lotteryPrizeLog1')}}{{item.username|name}}{{$t('lang.lotteryPrizeLog2')}}{{item.prize}}FES
+              {{$t('lang.lotteryPrizeLog1')}} {{item.username|name}} {{$t('lang.lotteryPrizeLog2')}} {{item.prize}}FES
             </li>
           </ul>
         </div>
@@ -124,7 +123,7 @@
     </div>
 
     <div class="lottery_number">
-      {{$t('lang.lotteryNumber1')}}{{lotteryCount}}{{$t('lang.lotteryNumber2')}}
+      {{$t('lang.lotteryNumber1')}} {{lotteryCount}} {{$t('lang.lotteryNumber2')}}
     </div>
     <div id="lottery-wrap">
       <button id="handler" type="button"></button>
@@ -134,9 +133,20 @@
       <h3>{{$t("lang.lotteryRuleTitle1")}}</h3>
       1.{{$t("lang.lotteryRuleContent1_1")}}<br>
       2.{{$t("lang.lotteryRuleContent1_2")}}<br>
-      3.{{$t("lang.lotteryRuleContent1_3")}}<br>
-      4.{{$t("lang.lotteryRuleContent1_4")}}<br><br>
+      <template v-if="$t('lang.lotteryRuleContent1_3')">
+        3.{{$t("lang.lotteryRuleContent1_3")}}<br>
+      </template>
+      <template v-if="$t('lang.lotteryRuleContent1_4')">
+        4.{{$t("lang.lotteryRuleContent1_4")}}<br>
+      </template>
+      <template v-if="$t('lang.lotteryRuleContent1_5')">
+        5.{{$t("lang.lotteryRuleContent1_5")}}<br>
+      </template>
+      <br>
 
+      <h3> {{$t("lang.lotteryRuleNotice")}}</h3>
+      1.{{$t("lang.lotteryRuleNoticeContent1")}}<br>
+      2.{{$t("lang.lotteryRuleNoticeContent2")}}<br><br>
 
       <h3> {{$t("lang.lotteryRuleTitle2")}}</h3>
       {{$t("lang.lotteryRuleContent2_1")}}<br><br>
@@ -150,11 +160,12 @@
       {{$t("lang.lotteryRuleContent3_6")}} 88 FEC <br><br>
 
       {{$t("lang.lotteryRuleTitle4")}}<br>
-      {{$t("lang.lotteryRuleContent4_1")}} <a :href="telegramGroup">{{telegramGroup}}</a><br>
-      {{$t("lang.lotteryRuleContent4_2")}} <a :href="telegramChannel">{{telegramChannel}}</a><br>
-      {{$t("lang.lotteryRuleContent4_3")}}<br><br>
-
+      - {{$t("lang.lotteryRuleContent4_1")}} <br>
+      - {{$t("lang.lotteryRuleContent4_2")}} <a :href="telegramGroup">{{telegramGroup}}</a><br>
+      - {{$t("lang.lotteryRuleContent4_3")}} <a :href="telegramChannel">{{telegramChannel}}</a><br>
       {{$t("lang.lotteryRuleContent4_4")}}<br><br>
+
+      {{$t("lang.lotteryRuleContent4_5")}}<br><br>
     </div>
   </div>
 </body>
@@ -173,23 +184,23 @@
     },
     computed: {
 
-    telegramGroup () {
-      const locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
-      if(locale === 'cn'){
-        return 'https://t.me/+l3mdJzsapLRkNGE1'
-      }else{
-        return 'https://t.me/FiveElementsSystemGroupEN'
+      telegramGroup() {
+        const locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        if (locale === 'cn') {
+          return 'https://t.me/+l3mdJzsapLRkNGE1'
+        } else {
+          return 'https://t.me/FiveElementSystemGroupEN'
+        }
+      },
+      telegramChannel() {
+        const locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
+        if (locale === 'cn') {
+          return 'https://t.me/FiveElementSystemChannelCN'
+        } else {  
+          return 'https://t.me/FiveElementSystemChannelEN'
+        }
       }
     },
-    telegramChannel () {
-      const locale = api.getPrefs({ sync: true, key: KEY_LANGUAGE });
-      if(locale === 'cn'){
-        return 'https://t.me/FiveElementSystemChannelCN'
-      }else{
-        return 'https://t.me/FiveElementSystemChannelEN'
-      }
-    }
-  },
     filters: {
       email: function(value) {
         if (value && value.length > 6) {
@@ -223,7 +234,7 @@
           },
           texts: {
             content: [{
-              text: this.$t('lang.lotterydialogBox1')+`${amount}FEC`
+              text: this.$t('lang.lotterydialogBox1') + `${amount}FEC`
             }],
             btnTitle: this.$t('lang.lotterydialogBox2')
           },
@@ -231,9 +242,10 @@
             bg: '../../image/img/dialogBox_lottery2.png',
             content: [{
               bg: 'rgba(254,254,254,0.5)',
-              marginT: 220,
+              marginT: 240,
               marginL: 60,
               w: 180,
+              h: 60,
               align: 'center',
               color: '#fff',
               size: 12
@@ -263,7 +275,7 @@
       cancel() {
         api.closeWin();
       },
- },
+    },
     mounted() {
       POST(initDrawLis(), { token: api.getPrefs({ sync: true, key: KEY_TOKEN }), }, (ret, err) => {
         const initDrawLis = ret.data;

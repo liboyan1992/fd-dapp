@@ -51,8 +51,8 @@
     // region API functions
 //    window.BASE_URL = 'http://192.168.10.70:8099/'; //测试服
     // window.BASE_URL = 'http://192.168.0.120:8099/'; //测试服
-    //window.BASE_URL = 'https://api.fes5.net/'; //正式服
-    window.BASE_URL = 'https://api.fes5.net/test/'; //测试服
+    window.BASE_URL = 'https://api.fes5.net/'; //正式服
+    // window.BASE_URL = 'https://api.fes5.net/test/'; //测试服
 
     window.URL_HELPER = 'https://five-elements.io/%e9%bb%84%e9%87%91/'; // 帮助中心
     window.URL_GUIDE = 'https://five-elements.io/rules/'; // 游戏介绍
