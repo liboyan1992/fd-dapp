@@ -193,7 +193,7 @@ window.MS = {
 	"lotteryRuleNoticeContent1":"FEC akan dikumpul dari Setiap Isnin hingga Ahad secara keseluruhan sebagai kitaran mingguan. Bidaan minggu sebelumnya tidak akan diambil kira dalam pengumpulan minggu akan datang.",
 	"lotteryRuleNoticeContent2": "Semua pengguna layak untuk mengambil bahagian sekali sahaja. Acara Airdrop Tahun Baru Imlek FEC 28,888 akan diadakan pada 1 Feb 2022 hingga 8 Feb 2022.",
 
-	"lotteryRuleTitle2":"Tempoh Acara：Hingga 28/2/2022",
+	"lotteryRuleTitle2":"Tempoh Acara: Antara 6 petang hingga 11 malam GMT+8 setiap hari hingga 28/2/2022",
 	"lotteryRuleContent2_1":"",
 
 	"lotteryRuleTitle3":"Hadiah untuk dimenangi",

@@ -193,7 +193,7 @@ window.VN = {
     "lotteryRuleNoticeContent1":"Tổng cộng FEC sẽ được cộng dồn từ Thứ Hai đến Chủ Nhật hàng tuần theo chu kỳ hàng tuần. Giá thầu của tuần trước sẽ không được tính vào tích lũy của tuần sắp tới.",
     "lotteryRuleNoticeContent2":"Tất cả người dùng chỉ đủ điều kiện tham gia một lần. Sự kiện Airdrop Tết Âm lịch 28,888 FEC sẽ được tổ chức từ ngày 1 tháng 2 năm 2022 đến ngày 8 tháng 2 năm 2022.",
 
-    "lotteryRuleTitle2": "Giai đoạn sự kiện ： Đến ngày 28/2/2022",
+    "lotteryRuleTitle2": "Thời gian diễn ra sự kiện: Từ 6 giờ chiều đến 11 giờ tối theo GMT + 8 hàng ngày cho đến 28/2/2022",
     "lotteryRuleContent2_1": "",
 
     "lotteRuleTitle3": "Giải thưởng sẽ giành được",

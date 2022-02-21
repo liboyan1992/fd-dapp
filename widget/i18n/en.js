@@ -193,7 +193,7 @@ window.EN = {
     "lotteryRuleNoticeContent1":"FECs will be accumulated from Every Monday to Sunday in total as the weekly cycle. Previous week’s bids will not be accounted in the upcoming week accumulation.",
     "lotteryRuleNoticeContent2":"All users are eligible to participate once only. The 28,888 FEC Lunar New Year Airdrop Event will be held during 1st Feb 2022 till 8th Feb 2022.",
 
-    "lotteryRuleTitle2":"Event Period：Till 28/2/2022",
+    "lotteryRuleTitle2":"Event Period：Between 6pm to 11pm GMT+8 daily till 28/2/2022",
     "lotteryRuleContent2_1":"",
 
     "lotteryRuleTitle3":"Prizes to be won",

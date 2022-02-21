@@ -115,7 +115,7 @@
         <div class="box">
           <ul class="lb" :class="{marquee_top:animate}">
             <li v-for="(item, index) in list" :key="index">
-              {{$t('lang.lotteryPrizeLog1')}} {{item.username|name}} {{$t('lang.lotteryPrizeLog2')}} {{item.prize}}FES
+              {{$t('lang.lotteryPrizeLog1')}} {{item.username|name}} {{$t('lang.lotteryPrizeLog2')}} {{item.prize}}FEC
             </li>
           </ul>
         </div>
@@ -283,7 +283,7 @@
         initDrawLis.forEach(element => {
           this.products.push({
             "imgUrl": "../../image/img/redpacket.png",
-            "name": element.prize + 'FES',
+            "name": element.prize + 'FEC',
             "id": element.id,
             "prize": element.prize,
           })

@@ -195,7 +195,7 @@ window.TW = {
 
 
     "lotteryRuleTitle2":"活動時間：",
-    "lotteryRuleContent2_1":"即日起至2022年2月28日24點 GMT+8",
+    "lotteryRuleContent2_1":"即日起至2022年2月28日，北京時間每天下午6點到晚上11點可以參與抽獎",
 
     "lotteryRuleTitle3":"獎勵設置：",
     "lotteryRuleContent3_1":"一等獎:",

@@ -193,7 +193,7 @@ window.TR = {
 	"lotteryRuleNoticeContent1":"FEC'ler haftalık döngü olarak toplamda Her Pazartesi'den Pazar'a toplanacak. Bir önceki haftanın teklifleri bir sonraki hafta birikiminde dikkate alınmayacaktır.",
 	"lotteryRuleNoticeContent2":"Tüm kullanıcılar yalnızca bir kez katılma hakkına sahiptir. 28.888 FEC Ay Yeni Yılı Airdrop Etkinliği 1 Şubat 2022 ile 8 Şubat 2022 arasında gerçekleştirilecektir.",
 
-	"piyangoRuleTitle2":"Etkinlik Dönemi：28/2/2022'ye Kadar",
+	"piyangoRuleTitle2":"Etkinlik Süresi: 28/2/2022'ye kadar her gün 18:00 - 23:00 GMT+8 arası",
 	"lotteryRuleContent2_1":"",
 
 	"lotteryRuleTitle3":"Kazanılacak ödüller",

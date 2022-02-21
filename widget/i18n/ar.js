@@ -193,7 +193,7 @@ window.AR = {
     "lotteryRuleNoticeContent1": "سيتم تجميع FECs من كل يوم إثنين إلى أحد بشكل إجمالي كدورة أسبوعية. لن يتم حساب عروض أسعار الأسبوع السابق في تراكم الأسبوع القادم.",
     "lotteryRuleNoticeContent2": "جميع المستخدمين مؤهلين للمشاركة مرة واحدة فقط. سيتم عقد 28888 FEC Lunar New Year Airdrop Event خلال 1 فبراير 2022 حتى 8 فبراير 2022.",
 
-    "lotteryRuleTitle2": "فترة الحدث حتى 28/2/2022",
+    "lotteryRuleTitle2": "فترة الحدث: من 6 مساءً إلى 11 مساءً بتوقيت غرينتش + 8 يوميًا حتى 28/2/2022",
     "lotteryRuleContent2_1": "",
 
     "lotteryRuleTitle3": "الجوائز التي ستفوز بها",

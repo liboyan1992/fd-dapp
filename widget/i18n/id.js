@@ -194,7 +194,7 @@ window.ID = {
 	 "lotteryRuleNoticeContent1":"FEC akan diakumulasikan dari Setiap Senin hingga Minggu secara total sebagai siklus mingguan. Tawaran minggu sebelumnya tidak akan diperhitungkan dalam akumulasi minggu mendatang.",
 	 "lotteryRuleNoticeContent2":"Semua pengguna memenuhi syarat untuk berpartisipasi hanya sekali. Acara Airdrop Tahun Baru Imlek 28.888 FEC akan diadakan selama 1 Februari 2022 hingga 8 Februari 2022.",
 
-	 "lotteryRuleTitle2":"Periode Acara：Hingga 28/2/2022",
+	 "lotteryRuleTitle2":"Periode Acara: Antara pukul 18:00 hingga 23:00 GMT+8 setiap hari hingga 28/2/2022",
 	 "lotteryRuleContent2_1":"",
 
 	 "lotteryRuleTitle3":"Hadiah yang akan dimenangkan",

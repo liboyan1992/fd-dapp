@@ -193,7 +193,7 @@ window.KO = {
 	"lotteryRuleNoticeContent1":"FEC는 매주 월요일부터 일요일까지 총 주간 사이클로 누적됩니다. 이전 주의 입찰은 다음 주 누적에 반영되지 않습니다.",
 	"lotteryRuleNoticeContent2":"모든 사용자는 한 번만 참여할 수 있습니다. 28,888 FEC 설날 에어드롭 이벤트가 2022년 2월 1일부터 2022년 2월 8일까지 개최됩니다.",
 
-	"lotteryRuleTitle2": "이벤트 기간: 2022년 2월 28일까지",
+	"lotteryRuleTitle2": "이벤트 기간: 2022년 2월 28일까지 매일 오후 6시부터 11시까지 GMT+8",
 	"lotteryRuleContent2_1":"",
 
 	"lotteryRuleTitle3":" 당첨된 상품",

@@ -193,7 +193,7 @@ window.JP = {
 	"lotteryRuleNoticeContent1": "FECは,毎週月曜日から日曜日までの合計で週単位で累積されます。前週の入札は,次の週の累積には含まれません。",
 	"lotteryRuleNoticeContent2": "すべてのユーザーは1回だけ参加できます。28,888FEC旧正月エアドロップイベントは2022年2月1日から2022年2月8日まで開催されます。",
 
-	"lotteryRuleTitle2": "イベント期間:2022年2月28日まで",
+	"lotteryRuleTitle2": "イベント期間：2022年2月28日まで毎日午後6時から午後11時までGMT +8",
 	"lotteryRuleContent2_1": "",
 
 	"lotteryRuleTitle3": "賞品が当たる",

@@ -195,7 +195,7 @@ window.CN = {
 
 
     "lotteryRuleTitle2":"活动时间：",
-    "lotteryRuleContent2_1":"即日起至2022年2月28日24点 GMT+8",
+    "lotteryRuleContent2_1":"即日起至2022年2月28日，北京时间每天下午6点到晚上11点可以参与抽奖",
 
     "lotteryRuleTitle3":"奖励设置：",
     "lotteryRuleContent3_1":"一等奖:",
